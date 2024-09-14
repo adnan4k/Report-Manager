@@ -17,9 +17,9 @@
             {{$currentStep}} Out of {{$totalStep}}
         </ol>
 
-        @if (session('success'))
-        <span class="text-success">{{ session('success') }}</span>
-        @endif
+        <script>
+            toastr.success('Customer Registration Successfully Completed.');
+        </script>
 
         <!-- Step 1: User Details -->
         @if ($currentStep === 1)

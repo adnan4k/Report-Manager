@@ -1,105 +1,80 @@
 <aside
     class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark"
     id="sidenav-main">
-    <div class="sidenav-header">
-        <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-            aria-hidden="true" id="iconSidenav"></i>
-            <a class="navbar-brand m-0 d-flex text-wrap align-items-center" href=" {{ route('dashboard') }} ">
-                <img src="{{ asset('assets') }}/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-2 font-weight-bold text-white">Report Management</span>
+    <div class="flex flex-col h-full p-4">
+        <!-- Sidenav header -->
+        <div class="flex justify-between items-center">
+            <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
+                <img src="{{ asset('assets') }}/img/logo-ct.png" class="h-10" alt="main_logo">
+                <span class="text-white font-semibold">Report Management</span>
             </a>
-    </div>
-    <hr class="horizontal light mt-0 mb-2">
-    <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
-        <ul class="navbar-nav">
+            <button id="iconSidenav" class="text-white opacity-50 focus:outline-none md:hidden">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <hr class="my-4 border-gray-400">
 
-            <li class="nav-item">
-                <a class="nav-link text-white {{ Route::currentRouteName() == 'user-profile' ? ' active bg-gradient-primary' : '' }} "
-                    href="{{route('multistep')}}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Customers</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ Route::currentRouteName() == 'user-management' ? ' active bg-gradient-primary' : '' }} "
-                    href="{{ route('user-management') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">User Management</span>
-                </a>
-            </li>
-          
-            <li class="nav-item">
-                <a class="nav-link text-white {{ Route::currentRouteName() == 'dashboard' ? ' active bg-gradient-primary' : '' }} "
-                    href="{{ route('dashboard') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">dashboard</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ Route::currentRouteName() == 'tables' ? ' active bg-gradient-primary' : '' }} "
-                    href="{{ route('tables') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">table_view</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Tables</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ Route::currentRouteName() == 'billing' ? ' active bg-gradient-primary' : '' }}  "
-                    href="{{ route('billing') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">receipt_long</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Billing</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ Route::currentRouteName() == 'virtual-reality' ? ' active bg-gradient-primary' : '' }}  "
-                    href="{{ route('virtual-reality') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">view_in_ar</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Virtual Reality</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ Route::currentRouteName() == 'rtl' ? ' active bg-gradient-primary' : '' }}  "
-                    href="{{ route('rtl') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
-                    </div>
-                    <span class="nav-link-text ms-1">RTL</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ Route::currentRouteName() == 'notifications' ? ' active bg-gradient-primary' : '' }}  "
-                    href="{{ route('notifications') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">notifications</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Notifications</span>
-                </a>
-            </li>
-            <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ Route::currentRouteName() == 'profile' ? ' active bg-gradient-primary' : '' }}  "
-                    href="{{ route('profile') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">person</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Profile</span>
-                </a>
-            </li>
-          
-        </ul>
+        <!-- Sidenav Links -->
+        <nav class="flex-grow overflow-y-auto">
+            <ul class="space-y-2">
+                <li>
+                    <a href="{{ route('dashboard') }}"
+                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'dashboard' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
+                        <i class="material-icons">dashboard</i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('register-cusotmer') }}"
+                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'register-cusotmer' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
+                        <i class="fas fa-user-circle text-lg"></i>
+                        <span>Customers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('user-management') }}"
+                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'user-management' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
+                        <i class="fas fa-list-ul text-lg"></i>
+                        <span>User Management</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('tables') }}"
+                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'tables' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
+                        <i class="material-icons">table_view</i>
+                        <span>Tables</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('billing') }}"
+                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'billing' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
+                        <i class="material-icons">receipt_long</i>
+                        <span>Billing</span>
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="{{ route('rtl') }}"
+                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'rtl' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
+                        <i class="material-icons">format_textdirection_r_to_l</i>
+                        <span>RTL</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('notifications') }}"
+                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'notifications' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
+                        <i class="material-icons">notifications</i>
+                        <span>Notifications</span>
+                    </a>
+                </li>
+                <li class="mt-3">
+                    <h6 class="px-4 text-xs text-white font-bold">Account pages</h6>
+                </li>
+
+            </ul>
+        </nav>
     </div>
- 
+
+
 </aside>

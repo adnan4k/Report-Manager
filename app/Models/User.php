@@ -44,4 +44,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function businesses()
+    {
+        return $this->hasMany(Business::class);
+    }
+
+    // Define the relationship with Reminder
+    public function reminders()
+    {
+        return $this->hasMany(Reminder::class);
+    }
 }

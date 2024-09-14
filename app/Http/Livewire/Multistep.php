@@ -60,49 +60,52 @@ class Multistep extends Component
     public function submit()
     {
         // Handle Step 1 (User Data)
-            // Assuming validation is done and passed
-            $user = new User();
-            $user->name = $this->name;
-            $user->email = $this->email;
-            $user->phone = $this->phone;
-            $user->address = $this->address;
-            $user->save();
-        
+        // Assuming validation is done and passed
+        $this->validation();
+        $user = new User();
+        $user->name = $this->name;
+        $user->email = $this->email;
+        $user->phone = $this->phone;
+        $user->address = $this->address;
+        $user->save();
+
 
         // Handle Step 2 (Business and Report Data)
 
-            $business = new Business();
-            $business->user_id = $user->id;
-            $business->business_name = $this->business_name;
-            $business->tin = $this->tin;
-            $business->price = $this->price;
-            $business->save();
+        $business = new Business();
+        $business->user_id = $user->id;
+        $business->business_name = $this->business_name;
+        $business->tin = $this->tin;
+        $business->price = $this->price;
+        $business->save();
 
-            $report = new Report();
-            $report->business_id = $business->id;
-            $report->report_center = $this->report_center;
-            $report->tax_due_date = $this->taxtype_due_date;
-            $report->payroll_due_date = $this->payroll_due_date;
-            $report->statement_due_date = $this->statement_due_date;
-            $report->save();
+        $report = new Report();
+        $report->business_id = $business->id;
+        $report->report_center = $this->report_center;
+        $report->tax_due_date = $this->taxtype_due_date;
+        $report->payroll_due_date = $this->payroll_due_date;
+        $report->statement_due_date = $this->statement_due_date;
+        $report->save();
 
         // Handle Step 3 (Document Uploads)
-            // Assuming validation is done and passed
-            $document = new Document();
-            $document->business_id = $business->id; 
-            $document->payroll = $this->payroll->store('payrolls');
-            $document->pension = $this->pension->store('pensions');
-            $document->tax = $this->tax->store('taxs');
-            $document->income_statement = $this->income_statement->store('income_statements');
-            $document->balance_sheet = $this->balance_sheet->store('balance_sheets');
-            $document->save();
-        
+        // Assuming validation is done and passed
+        $document = new Document();
+        $document->business_id = $business->id;
+        $document->payroll = $this->payroll->store('payrolls');
+        $document->pension = $this->pension->store('pensions');
+        $document->tax = $this->tax->store('taxs');
+        $document->income_statement = $this->income_statement->store('income_statements');
+        $document->balance_sheet = $this->balance_sheet->store('balance_sheets');
+        $document->save();
+
 
         // Redirect or provide feedback
-        return redirect()->route('dashboard')->with('success', 'Registration is completed successfully.');
+        session()->flash('message', 'Customer Registration Successfully Completed.');
+
+        return redirect()->to('/all-customers');
     }
 
-  
+
 
     public function validation()
     {
