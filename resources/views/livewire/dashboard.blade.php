@@ -60,6 +60,7 @@
                       </div>
                   </div>
               </div>
+
               <div class="col-xl-3 col-sm-6">
                   <div class="card">
                       <div class="card-header p-3 pt-2">
@@ -373,7 +374,7 @@
                                               </div>
                                           </td>
                                           <td class="align-middle text-center text-sm">
-                                              <span class="text-xs font-weight-bold"> $20,500 </span>
+                                              <span class="text-xs  font-weight-bold"> $20,500 </span>
                                           </td>
                                           <td class="align-middle">
                                               <div class="progress-wrapper w-75 mx-auto">

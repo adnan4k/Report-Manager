@@ -3,7 +3,6 @@
         <div class="container position-sticky z-index-sticky top-0">
             <div class="row">
                 <div class="col-12">
-                    <x-navbars.navs.guest></x-navbars.navs.guest>
                 </div>
             </div>
         </div>
@@ -12,7 +11,6 @@
             <div class="page-header page-header-bg align-items-start min-vh-100">
                     <span class="mask bg-gradient-dark opacity-6"></span>
             {{ $slot }}
-            <x-footers.guest></x-footers.guest>
              </div>
         </main>
         @else
@@ -31,7 +29,6 @@
                 {{  $slot }}
 
         </div>
-        <x-footers.auth></x-footers.auth>
         </main>
         <x-plugins></x-plugins>
     </div>
@@ -42,7 +39,6 @@
 
         {{ $slot }}
 
-        <x-footers.auth></x-footers.auth>
     </main>
     <x-plugins></x-plugins>
     @endif

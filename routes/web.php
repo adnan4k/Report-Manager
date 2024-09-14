@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerRegistration;
 use App\Http\Livewire\Auth\ForgotPassword;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Register;
@@ -41,6 +42,7 @@ Route::get('reset-password/{id}', ResetPassword::class)->middleware('signed')->n
 Route::get('sign-up', Register::class)->middleware('guest')->name('register');
 Route::get('sign-in', Login::class)->middleware('guest')->name('login');
 
+
 Route::get('user-management', UserManagement::class)->middleware('auth')->name('user-management');
 
 Route::group(['middleware' => 'auth'], function () {
@@ -54,3 +56,4 @@ Route::get('static-sign-in', StaticSignIn::class)->name('static-sign-in');
 Route::get('static-sign-up', StaticSignUp::class)->name('static-sign-up');
 Route::get('rtl', RTL::class)->name('rtl');
 });
+require __DIR__ . '/admin.php';

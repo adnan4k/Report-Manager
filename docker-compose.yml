@@ -1,0 +1,76 @@
+services:
+    laravel.test:
+        build:
+            context: ./vendor/laravel/sail/runtimes/8.2
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: sail-8.2/app
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        ports:
+            - "8080:80"
+            - '${VITE_PORT:-5172}:${VITE_PORT:-5173}'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+            IGNITION_LOCAL_SITES_PATH: '${PWD}'
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - sail
+        depends_on:
+            - mysql
+            - mailpit
+
+    mysql:
+        image: 'mysql:8.0'
+        ports:
+            - '3308:3306'  # Ensure this port is not conflicting on your host system
+        environment:
+            MYSQL_ROOT_PASSWORD: 'your_password'  # Set a strong password here
+            MYSQL_DATABASE: 'fin_report'
+            MYSQL_USER: 'fin_report_user'
+            MYSQL_PASSWORD: 'user_password'  # Ensure this is a valid password
+        volumes:
+            - 'sail-mysql:/var/lib/mysql'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - mysqladmin
+                - ping
+                - '-pyour_password'  # Use the correct root password
+            retries: 3
+            timeout: 5s
+
+    phpmyadmin:
+        image: 'phpmyadmin:latest'
+        ports:
+            - 8081:80
+        environment:
+            PMA_HOST: mysql  # Define the MySQL service name
+            MYSQL_ROOT_PASSWORD: 'your_password'  # Ensure it matches the root password
+        depends_on:
+            - mysql
+        networks:
+            - sail
+
+    mailpit:
+        image: 'axllent/mailpit:latest'
+        ports:
+            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
+        networks:
+            - sail
+
+networks:
+    sail:
+        driver: bridge
+
+volumes:
+    sail-mysql:
+        driver: local
