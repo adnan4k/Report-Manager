@@ -9,7 +9,7 @@ class Document extends Model
 {
     use HasFactory;
 
-    public function business()
+    public function businesses()
     {
         return $this->belongsTo(Business::class);
     }

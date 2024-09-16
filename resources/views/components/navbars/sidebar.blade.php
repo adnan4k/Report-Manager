@@ -25,25 +25,25 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('register-cusotmer') }}"
+                    <a href="{{ route('all-customers') }}"
                         class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'register-cusotmer' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
                         <i class="fas fa-user-circle text-lg"></i>
                         <span>Customers</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('user-management') }}"
+                    <a href="{{ route('document-list') }}"
                         class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'user-management' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
-                        <i class="fas fa-list-ul text-lg"></i>
-                        <span>User Management</span>
+                        <i class="fas fa-file-excel text-lg"></i>
+                        <span>Documents</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{ route('tables') }}"
+                    <a href="{{ route('statement-reports') }}"
                         class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'tables' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
-                        <i class="material-icons">table_view</i>
-                        <span>Tables</span>
+                        <i class="fa fa-file" aria-hidden="true"></i>
+                        <span>Reports</span>
                     </a>
                 </li>
                 <li>

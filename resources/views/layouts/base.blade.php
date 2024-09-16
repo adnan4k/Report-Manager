@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets') }}/img/apple-icon.png">
     <link rel="icon" type="image/png" href="{{ asset('assets') }}/img/favicon.png">
     <title>
-       report-management
+        report-management
     </title>
 
     <!--     Fonts and icons     -->
@@ -23,7 +23,7 @@
     <!-- CSS Files -->
     <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
     @livewireStyles
@@ -38,6 +38,44 @@
     <script src="{{ asset('assets') }}/js/core/bootstrap.min.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Include SweetAlert library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        window.addEventListener('showConfirmation', event => {
+            let customerData = event.detail;
+            let customerId
+            customerData.forEach(customer => {
+                customerId = customer.id;
+                console.log('Customer ID:', customerId);
+            });
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log(customerId, 'rr')
+                    Livewire.dispatch('deleteConfirmed', {
+                        id: customerId
+                    }); // Trigger the delete method in Livewire
+                }
+            });
+        });
+
+        window.addEventListener('customerDeleted', event => {
+            Swal.fire(
+                'Deleted!',
+                'Customer has been deleted.',
+                'success'
+            );
+        });
+    </script>
 
     @stack('js')
     <script>
