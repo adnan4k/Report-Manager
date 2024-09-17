@@ -39,38 +39,40 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="{{ route('statement-reports') }}"
-                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'tables' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
+                <!-- Main Sidebar Link -->
+                <li x-data="{ open: localStorage.getItem('dropdown-open') === 'true' }">
+                    <a href="#" @click.prevent="open = !open; localStorage.setItem('dropdown-open', open)"
+                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'reports' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
                         <i class="fa fa-file" aria-hidden="true"></i>
                         <span>Reports</span>
+                        <i :class="{'fa-chevron-up': open, 'fa-chevron-down': !open}" class="fa ml-auto"></i>
                     </a>
+
+                    <!-- Dropdown Menu -->
+                    <ul x-show="open"  localStorage.setItem('dropdown-open', open) class="ml-3 text-sm text-white mt-2 space-y-2">
+                        <li>
+                            <a href="{{ route('tax-reports') }}" class="{{ Route::currentRouteName() == 'tax-reports' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }} flex items-center space-x-2 p-2  rounded">
+                                <i class="fa fa-calculator" aria-hidden="true"></i>
+                                <span>Tax Reports</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('payroll-reports') }}" class="{{ Route::currentRouteName() == 'payroll-reports' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }} flex items-center space-x-2 p-2  rounded">
+                                <i class="fa fa-users" aria-hidden="true"></i>
+                                <span>Payroll Reports</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('statement-reports') }}" class="{{ Route::currentRouteName() == 'statement-reports' ? 'bg-gradient-primary' : '' }} flex items-center space-x-2 p-2  rounded">
+                                <i class="fa fa-file-alt" aria-hidden="true"></i>
+                                <span>Statement Reports</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <a href="{{ route('billing') }}"
-                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'billing' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
-                        <i class="material-icons">receipt_long</i>
-                        <span>Billing</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <a href="{{ route('rtl') }}"
-                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'rtl' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
-                        <i class="material-icons">format_textdirection_r_to_l</i>
-                        <span>RTL</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('notifications') }}"
-                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'notifications' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
-                        <i class="material-icons">notifications</i>
-                        <span>Notifications</span>
-                    </a>
-                </li>
-                <li class="mt-3">
-                    <h6 class="px-4 text-xs text-white font-bold">Account pages</h6>
-                </li>
+
+
+
 
             </ul>
         </nav>

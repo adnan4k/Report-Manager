@@ -5,103 +5,104 @@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="flex flex-row justify-between bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Customers </h6>
-                        <a href="/register-cusotmer" wire:navigate class="text-white bg-gray-500 rounded mx-5 p-2"> Add New </a>
+                        <a href="/register-cusotmer" wire:navigate class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"> Add New </a>
                     </div>
+
                 </div>
                 <div class="card-body px-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
-                            <thead>
+                    <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th class="text-uppercase text-black text-xxs font-weight-bolder opacity-7">
+                                    <th scope="col" class="px-1 py-1">
                                         Customer
                                     </th>
-
-                                    <th class="text-center text-uppercase text-black text-xxs font-weight-bolder opacity-7">
+                                    <th scope="col" class="px-1 py-1 text-center">
                                         Phone
                                     </th>
-                                    <th class="text-center text-uppercase text-black text-xxs font-weight-bolder opacity-7">
+                                    <th scope="col" class="px-3 py-1 text-center">
                                         Address
                                     </th>
-                                    <th class="text-center text-uppercase text-black text-xxs font-weight-bolder opacity-7">
+                                    <th scope="col" class="px-1 py-1 text-center">
                                         Business Name
                                     </th>
-                                    <th class="text-center text-uppercase text-black text-xxs font-weight-bolder opacity-7">
+                                    <th scope="col" class="px-1 py-1 text-center">
                                         Payment
                                     </th>
-                                    <th class="text-center text-uppercase text-black text-xxs font-weight-bolder opacity-7">
+                                    <th scope="col" class="px-1 py-1 text-center">
                                         TIN
                                     </th>
-                                    <th class="text-center text-uppercase text-black text-xxs font-weight-bolder opacity-7">Actions</th>
+                                    <th scope="col" class="px-1 py-1 text-center">
+                                        Actions
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($customers as $customer)
-                                <tr>
-                                    <td>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{ $customer->name }}</h6>
-                                            <p class="text-xs text-secondary mb-0">{{ $customer->email }}
-                                            </p>
+                                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                    <td class="px-2 py-1">
+                                        <div class="flex flex-col justify-center">
+                                            <h6 class="text-sm font-medium text-gray-900 dark:text-white">{{ $customer->name }}</h6>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">{{ $customer->email }}</p>
                                         </div>
                                     </td>
 
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs text-black mb-0">{{ $customer->phone }}</p>
+                                    <td class="px-2 py-1 text-center">
+                                        <p class="text-xs text-gray-900 dark:text-white">{{ $customer->phone }}</p>
                                     </td>
-                                    <td class="align-middle text-center">
-                                        <p class="text-xs text-black mb-0">{{ $customer->address }}</p>
+
+                                    <td class="px-2 py-1 text-center">
+                                        <p class="text-sm text-gray-900 dark:text-white">{{ $customer->address }}</p>
                                     </td>
-                                    <td class="align-middle text-center">
+
+                                    <td class="px-2 py-1 text-center">
                                         @if($customer->businesses->isNotEmpty())
                                         @foreach ($customer->businesses as $business)
                                         <div>
-                                            <span class="text-xs font-weight-bold">{{ $business->business_name }}</span>
+                                            <span class="text-xs font-bold">{{ $business->business_name }}</span>
                                         </div>
                                         @endforeach
                                         @else
-                                        <span class="text-xs text-black">N/A</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">N/A</span>
                                         @endif
-
-
                                     </td>
-                                    <td>
-                                        <div class="d-flex flex-column justify-content-center pl-6">
 
-                                            <h6 class="mb-0 text-sm">{{ $customer->businesses->first()->price ?? "" }}</h6>
-                                            <p class="text-xs text-secondary mb-0">Not Paid
-                                            </p>
+                                    <td class="px-2 py-1 text-center">
+                                        <div class="flex flex-col justify-center">
+                                            <h6 class="text-sm font-medium text-gray-900 dark:text-white">{{ $customer->businesses->first()->price ?? "" }}</h6>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">Not Paid</p>
                                         </div>
                                     </td>
-                                    <td class="align-middle text-center">
+
+                                    <td class="px-2 py-1 text-center">
                                         @if($customer->businesses->isNotEmpty())
                                         @foreach ($customer->businesses as $business)
                                         <div>
-                                            <span class="text-xs font-weight-bold">{{ $business->tin }}</span>
+                                            <span class="text-xs font-bold">{{ $business->tin }}</span>
                                         </div>
                                         @endforeach
                                         @else
-                                        <span class="text-xs text-black">N/A</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">N/A</span>
                                         @endif
                                     </td>
 
-                                    <td class="align-middle text-center">
+                                    <td class="px-2 py-1 text-center">
                                         <!-- Edit Icon -->
-                                        <button href="javascript:;" class="text-black font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit customer">
+                                        <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600" data-tooltip-target="tooltip-edit">
                                             <i class="fas fa-edit"></i>
                                         </button>
 
                                         <!-- Delete Icon -->
-                                        <button wire:click.prevent="deleteConfirmation({{$customer->id}})" class="text-danger font-weight-bold text-xs ms-3" data-toggle="tooltip" data-original-title="Delete customer">
+                                        <button wire:click.prevent="deleteConfirmation({{$customer->id}})" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600 ml-4">
                                             <i class="fas fa-times"></i>
                                         </button>
                                     </td>
-
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
+
                 </div>
             </div>
         </div>

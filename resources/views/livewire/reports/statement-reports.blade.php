@@ -7,66 +7,65 @@
                 </div>
             </div>
             <div class="card-body px-0 pb-2">
-                <div class="table-responsive p-0">
-                    <table class="table align-items-center mb-0">
-                        <thead>
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Business Name</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Due Date</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
-                                <th class="text-secondary opacity-7"></th>
+                                <th scope="col" class="px-6 py-3">
+                                    Business Name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Status
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-center">
+                                    Due Date
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-center">
+                                    Action
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($reports as $report)
-                            <tr>
-                                <td class="text-sm">
-                                    <p class="pl-5 text-[14px] text-gray-500 font-weight-bold mb-0">
-                                        {{ $report->business ? $report->business->business_name : 'N/A' }}
-                                    </p>
+                            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $report->business ? $report->business->business_name : 'N/A' }}
                                 </td>
-                                <td>
-                                    <p class="badge badge-sm bg-gradient-{{ $report->statement_status ? 'success' : 'warning' }}">{{ $report->statement_status ? 'Reported' : 'Pending' }}</p>
+                                <td class="px-6 py-4">
+                                    <span class="badge {{ $report->statement_status ? 'bg-green-500' : 'bg-yellow-500' }} text-white px-2 py-1 rounded">
+                                        {{ $report->statement_status ? 'Reported' : 'Pending' }}
+                                    </span>
                                 </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="text-secondary text-xs font-weight-bold">{{$report->statement_due_date}}</span>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="text-gray-500">{{ \Carbon\Carbon::parse($report->statement_due_date)->format('F j, Y') }}</span>
                                 </td>
-                                <td class="align-middle text-center text-sm">
-                                    <!-- Edit button with modal -->
-                                    <button id="changeStatusButton-{{ $report->id }}">
+                                <td class="px-6 py-4 text-center">
+                                    <button id="changeStatusButton-{{ $report->id }}" class="text-blue-600 dark:text-blue-500 hover:underline">
                                         <i class="fas fa-edit"></i>
                                     </button>
+
+                                    <!-- Modal -->
                                     <div class="modal fade" id="changeStatusModal-{{ $report->id }}" tabindex="-1" aria-labelledby="changeStatusLabel-{{ $report->id }}" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title text-success text-lg" id="changeStatusLabel-{{ $report->id }}">{{ __('Change Status') }}</h4>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                        <span class="iconify" data-icon="akar-icons:cross"></span>
-                                                    </button>
+                                                    <h4 class="modal-title text-lg text-gray-800" id="changeStatusLabel-{{ $report->id }}">
+                                                        Change Status
+                                                    </h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <!-- Modal Inner Form Box Start -->
-                                                    <div class="modal-inner-form-box">
-                                                        <div class="row">
-                                                            <div class="flex flex-row">
-                                                                <label class="text-black color-heading font-medium mt-3 mx-2">{{ __('Status') }}</label>
-                                                                <!-- Wire model the status field -->
-                                                                <select wire:model="statuses.{{ $report->id }}" name="status" class="form-select block w-full mt-1 p-2 border border-black-300 rounded-lg focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                                                    <option value="0">{{ __('Pending') }}</option>
-                                                                    <option value="1">{{ __('Reported') }}</option>
-                                                                </select>
-
-                                                            </div>
-                                                        </div>
+                                                    <div class="flex flex-col">
+                                                        <label class="text-black mt-3">{{ __('Status') }}</label>
+                                                        <select wire:model="statuses.{{ $report->id }}" class="form-select mt-1 p-2 border border-gray-300 rounded focus:ring focus:ring-indigo-500">
+                                                            <option value="0">Pending</option>
+                                                            <option value="1">Reported</option>
+                                                        </select>
                                                     </div>
-                                                    <!-- Modal Inner Form Box End -->
                                                 </div>
-                                                <div class="modal-footer justify-content-start">
-                                                    <button type="button" class="theme-btn-back me-3 btn btn-secondary" data-bs-dismiss="modal" title="{{ __('Cancel') }}">{{ __('Back') }}</button>
-                                                    <!-- Wire click the changeStatus method with the report id -->
-                                                    <button wire:click="changeStatus({{ $report->id }})" type="button" class="theme-btn me-3 btn btn-success" title="{{ __('Change') }}">{{ __('Submit') }}</button>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <button wire:click="changeStatus({{ $report->id }})" type="button" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -81,7 +80,6 @@
         </div>
     </div>
 </div>
-
 <script>
     // Add event listeners for all buttons with unique ids
     document.querySelectorAll('[id^="changeStatusButton-"]').forEach(button => {
@@ -94,6 +92,22 @@
     });
 
     window.addEventListener('status-updated', event => {
-        console.log('event is here', event.detail)
+        // Hide any open modal
+        const modals = document.querySelectorAll('.modal.show'); // Select all currently visible modals
+        modals.forEach(modal => {
+            const modalInstance = bootstrap.Modal.getInstance(modal); // Get the instance of the currently open modal
+            if (modalInstance) {
+                modalInstance.hide(); // Hide the modal
+            }
+        });
+
+        // Display Toastr notification
+        Toastify({
+            text: "Status successfully updated",
+            className: "info",
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+            }
+        }).showToast();
     });
 </script>

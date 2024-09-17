@@ -14,7 +14,6 @@ class CustomersList extends Component
     public function mount()
     {
         $this->customers = User::with(['businesses', 'reminders'])->get();
-
     }
 
     public function deleteConfirmation($id)

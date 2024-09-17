@@ -4,15 +4,18 @@ namespace App\Http\Livewire\Reports;
 
 use Livewire\Component;
 use App\Models\Report;
+use Livewire\WithPagination;
 
 class StatementReports extends Component
 {
+    use WithPagination;
     public $reports;
     public $statuses = [];  // Use an array to track the status for each report
     public $reportId;
 
     public function mount()
     {
+
         $this->reports = Report::select('id', 'statement_status', 'statement_due_date', 'business_id')  // Include 'id'
             ->with(['business:id,business_name'])  // Load only specific fields from the related business
             ->get();
@@ -31,14 +34,18 @@ class StatementReports extends Component
 
         $report->update(['statement_status' => $status]);
 
+        $this->mount();
         // Dispatch the event after status is updated
+
         $this->dispatch('status-updated', ['id' => $id]);
     }
 
     public function render()
     {
         return view('livewire.reports.statement-reports', [
-            'reports' => $this->reports
+            'reports' => Report::select('id', 'statement_status', 'statement_due_date', 'business_id')  // Include 'id'
+                ->with(['business:id,business_name'])  // Load only specific fields from the related business
+                ->paginate(8)
         ]);
     }
 }
