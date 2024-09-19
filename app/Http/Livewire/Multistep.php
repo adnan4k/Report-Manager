@@ -38,6 +38,8 @@ class Multistep extends Component
     public $payroll;
     public $pension;
     public $tax;
+    public $userId;
+
 
     public function render()
     {
@@ -57,6 +59,38 @@ class Multistep extends Component
             $this->currentStep--;
         }
     }
+
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        $this->userId = $user->id; // Store the user ID
+        $this->name = $user->name;
+        $this->email = $user->email;
+        $this->phone = $user->phone;
+        $this->address = $user->address;
+
+        // Load Business Data
+        $business = Business::where('user_id', $user->id)->firstOrFail();
+        $this->business_name = $business->business_name;
+        $this->tin = $business->tin;
+        $this->price = $business->price;
+
+        // Load Report Data
+        $report = Report::where('business_id', $business->id)->firstOrFail();
+        $this->report_center = $report->report_center;
+        $this->taxtype_due_date = $report->tax_due_date;
+        $this->payroll_due_date = $report->payroll_due_date;
+        $this->statement_due_date = $report->statement_due_date;
+
+        // Load Document Data
+        $document = Document::where('business_id', $business->id)->firstOrFail();
+        $this->payroll = $document->payroll;
+        $this->pension = $document->pension;
+        $this->tax = $document->tax;
+        $this->income_statement = $document->income_statement;
+        $this->balance_sheet = $document->balance_sheet;
+    }
+
     public function submit()
     {
         // Handle Step 1 (User Data)
@@ -91,16 +125,17 @@ class Multistep extends Component
         // Assuming validation is done and passed
         $document = new Document();
         $document->business_id = $business->id;
-        $document->payroll = $this->payroll->store('payrolls');
-        $document->pension = $this->pension->store('pensions');
-        $document->tax = $this->tax->store('taxs');
-        $document->income_statement = $this->income_statement->store('income_statements');
-        $document->balance_sheet = $this->balance_sheet->store('balance_sheets');
+        $document->payroll = $this->payroll->store('payrolls', 'public');
+        $document->pension = $this->pension->store('pensions', 'public');
+        $document->tax = $this->tax->store('taxs', 'public');
+        $document->income_statement = $this->income_statement->store('income_statements', 'public');
+        $document->balance_sheet = $this->balance_sheet->store('balance_sheets', 'public');
         $document->save();
 
 
         // Redirect or provide feedback
         session()->flash('message', 'Customer Registration Successfully Completed.');
+        $this->dispatch('registered');
 
         return redirect()->to('/all-customers');
     }

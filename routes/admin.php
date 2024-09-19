@@ -19,5 +19,9 @@ Route::get('document-list', action: DocumentList::class)->name('document-list');
 Route::get(uri: 'statement-reports', action: StatementReports::class)->name('statement-reports');
 Route::get(uri: 'tax-reports', action: TotReports::class)->name('tax-reports');
 Route::get(uri: 'payroll-reports', action: PayrollReports::class)->name('payroll-reports');
+Route::get(uri: 'edit', action: PayrollReports::class)->name('payroll-reports');
+Route::get('edit/{id}', [Multistep::class, 'edit'])->name('edit');
+
+
 
 

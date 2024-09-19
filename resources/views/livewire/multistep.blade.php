@@ -16,10 +16,20 @@
         <ol id="stepper" class="flex justify-center items-center w-full text-sm text-gray-500 font-medium sm:text-base mb-2">
             {{$currentStep}} Out of {{$totalStep}}
         </ol>
-
+        @script
         <script>
-            toastr.success('Customer Registration Successfully Completed.');
+            $wire.on('post-created', () => {
+                console.log('here is something')
+                Toastify({
+                    text: "Customer Registration Successfully Completed.",
+                    className: "info",
+                    style: {
+                        background: "linear-gradient(to right, #00b09b, #96c93d)",
+                    }
+                }).showToast();
+            })
         </script>
+        @endscript
 
         <!-- Step 1: User Details -->
         @if ($currentStep === 1)
