@@ -2,19 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\WithFileUploads; // Import the trait
-
-
 use App\Models\Business;
 use App\Models\Document;
 use App\Models\Report;
 use App\Models\User;
 use Livewire\Component;
 
-class Multistep extends Component
+class EditCustomer extends Component
 {
-    use WithFileUploads;
-
     public $currentStep = 1;
     public $totalStep = 3;
     public $name;
@@ -39,13 +34,43 @@ class Multistep extends Component
     public $pension;
     public $tax;
     public $userId;
-
-
     public function render()
     {
-        return view(view: 'livewire.multistep');
+        return view('livewire.edit-customer');
     }
+    public function edit($id)
+    {
+        
+        $user = User::findOrFail($id);
+        $this->userId = $user->id; // Store the user ID
+        $this->name = $user->name;
+        $this->email = $user->email;
+        $this->phone = $user->phone;
+        $this->address = $user->address;
+    //   dd($this->phone);
+        // Load Business Data
+        $business = Business::where('user_id', $user->id)->firstOrFail();
+        $this->business_name = $business->business_name;
+        $this->tin = $business->tin;
+        $this->price = $business->price;
 
+        // Load Report Data
+        $report = Report::where('business_id', $business->id)->firstOrFail();
+        $this->report_center = $report->report_center;
+        $this->taxtype_due_date = $report->tax_due_date;
+        $this->payroll_due_date = $report->payroll_due_date;
+        $this->statement_due_date = $report->statement_due_date;
+
+        // Load Document Data
+        $document = Document::where('business_id', $business->id)->firstOrFail();
+        $this->payroll = $document->payroll;
+        $this->pension = $document->pension;
+        $this->tax = $document->tax;
+        $this->income_statement = $document->income_statement;
+        $this->balance_sheet = $document->balance_sheet;
+        return view(view: 'livewire.multistep');
+
+    }
     public function incrementSteps()
     {
         $this->validation();
@@ -59,59 +84,6 @@ class Multistep extends Component
             $this->currentStep--;
         }
     }
-
- 
-    public function submit()
-    {
-        // Handle Step 1 (User Data)
-        // Assuming validation is done and passed
-        $this->validation();
-        $user = new User();
-        $user->name = $this->name;
-        $user->email = $this->email;
-        $user->phone = $this->phone;
-        $user->address = $this->address;
-        $user->save();
-
-
-        // Handle Step 2 (Business and Report Data)
-
-        $business = new Business();
-        $business->user_id = $user->id;
-        $business->business_name = $this->business_name;
-        $business->tin = $this->tin;
-        $business->price = $this->price;
-        $business->save();
-
-        $report = new Report();
-        $report->business_id = $business->id;
-        $report->report_center = $this->report_center;
-        $report->tax_due_date = $this->taxtype_due_date;
-        $report->payroll_due_date = $this->payroll_due_date;
-        $report->statement_due_date = $this->statement_due_date;
-        $report->save();
-
-        // Handle Step 3 (Document Uploads)
-        // Assuming validation is done and passed
-        $document = new Document();
-        $document->business_id = $business->id;
-        $document->payroll = $this->payroll->store('payrolls', 'public');
-        $document->pension = $this->pension->store('pensions', 'public');
-        $document->tax = $this->tax->store('taxs', 'public');
-        $document->income_statement = $this->income_statement->store('income_statements', 'public');
-        $document->balance_sheet = $this->balance_sheet->store('balance_sheets', 'public');
-        $document->save();
-
-
-        // Redirect or provide feedback
-        session()->flash('message', 'Customer Registration Successfully Completed.');
-        $this->dispatch('registered');
-
-        return redirect()->to('/all-customers');
-    }
-
-
-
     public function validation()
     {
         if ($this->currentStep === 1) {
@@ -146,4 +118,5 @@ class Multistep extends Component
 
         return $validated;
     }
+
 }

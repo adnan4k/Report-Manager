@@ -4,6 +4,7 @@
 use App\Http\Controllers\CustomerRegistration;
 use App\Http\Livewire\CustomersList;
 use App\Http\Livewire\DocumentList;
+use App\Http\Livewire\EditCustomer;
 use App\Http\Livewire\Multistep;
 use App\Http\Livewire\ReportList;
 use App\Http\Livewire\Reports\PayrollReports;
@@ -20,7 +21,7 @@ Route::get(uri: 'statement-reports', action: StatementReports::class)->name('sta
 Route::get(uri: 'tax-reports', action: TotReports::class)->name('tax-reports');
 Route::get(uri: 'payroll-reports', action: PayrollReports::class)->name('payroll-reports');
 Route::get(uri: 'edit', action: PayrollReports::class)->name('payroll-reports');
-Route::get('edit/{id}', [Multistep::class, 'edit'])->name('edit');
+Route::get('edit/{id}', [EditCustomer::class, 'edit'])->name('edit');
 
 
 
