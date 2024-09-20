@@ -46,10 +46,10 @@
                       <div class="card-header p-3 pt-2">
                           <div
                               class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                              <i class="material-icons opacity-10">person</i>
-                          </div>
+                              <i class="material-icons opacity-10">business_center</i>
+                              </div>
                           <div class="text-end pt-1">
-                              <p class="text-sm mb-0 text-capitalize">New Clients</p>
+                              <p class="text-sm mb-0 text-capitalize">Reported </p>
                               <h4 class="mb-0">3,462</h4>
                           </div>
                       </div>
@@ -66,10 +66,10 @@
                       <div class="card-header p-3 pt-2">
                           <div
                               class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                              <i class="material-icons opacity-10">weekend</i>
-                          </div>
+                              <i class="material-icons opacity-10">store</i>
+                              </div>
                           <div class="text-end pt-1">
-                              <p class="text-sm mb-0 text-capitalize">Sales</p>
+                              <p class="text-sm mb-0 text-capitalize">UnReported </p>
                               <h4 class="mb-0">$103,430</h4>
                           </div>
                       </div>

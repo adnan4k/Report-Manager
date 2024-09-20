@@ -2,10 +2,14 @@
 <?php
 
 use App\Http\Controllers\CustomerRegistration;
+use App\Http\Livewire\BusinessDetail;
+use App\Http\Livewire\CustomerDetail;
 use App\Http\Livewire\CustomersList;
+use App\Http\Livewire\DetailsPage;
 use App\Http\Livewire\DocumentList;
 use App\Http\Livewire\EditCustomer;
 use App\Http\Livewire\Multistep;
+use App\Http\Livewire\ReportDetail;
 use App\Http\Livewire\ReportList;
 use App\Http\Livewire\Reports\PayrollReports;
 use App\Http\Livewire\Reports\StatementReports;
@@ -22,6 +26,14 @@ Route::get(uri: 'tax-reports', action: TotReports::class)->name('tax-reports');
 Route::get(uri: 'payroll-reports', action: PayrollReports::class)->name('payroll-reports');
 Route::get(uri: 'edit', action: PayrollReports::class)->name('payroll-reports');
 Route::get('edit/{id}', [EditCustomer::class, 'edit'])->name('edit');
+Route::get('details',DetailsPage::class)->name('details');
+Route::get('customer-details',CustomerDetail::class)->name('customer-details');
+Route::get('business-detail',BusinessDetail::class)->name('business-detail');
+Route::get('report-detail',ReportDetail::class)->name('report-detail');
+
+
+
+
 
 
 

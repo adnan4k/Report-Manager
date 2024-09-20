@@ -88,12 +88,15 @@
 
                                     <td class="px-2 py-1 text-center">
                                         <!-- Edit Icon -->
-                                        <a  wire:navigate href="{{route('edit',['id'=>$customer->id])}}"   class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600" data-tooltip-target="tooltip-edit">
+                                        <a wire:navigate href="{{route('edit',['id'=>$customer->id])}}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600" data-tooltip-target="tooltip-edit">
                                             <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a wire:navigate href="{{route('details')}}" class="mx-2 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600" data-tooltip-target="tooltip-edit">
+                                            <i class="fas fa-eye"></i>
                                         </a>
 
                                         <!-- Delete Icon -->
-                                        <button wire:click.prevent="deleteConfirmation({{$customer->id}})" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600 ml-4">
+                                        <button wire:click.prevent="deleteConfirmation({{$customer->id}})" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600 ">
                                             <i class="fas fa-times"></i>
                                         </button>
                                     </td>
