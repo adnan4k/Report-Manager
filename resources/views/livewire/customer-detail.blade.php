@@ -1,5 +1,5 @@
-<div class="flex  flex-row h-screen rounded-2xl border p-4 overflow-hidden bg-gray-300">
-    @livewire('details-page')
+<div class="flex  flex-row h-screen overflow-hidden">
+    @include('components.sidenav')
     <div class="ml-4 ">
         <div class="bg-white overflow-hidden shadow rounded-lg border">
             <div class="px-4 py-5 sm:px-6">
@@ -7,7 +7,7 @@
                     User Profile
                 </h3>
                 <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                    This is some information about the user.
+                    information about the user.
                 </p>
             </div>
             <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
@@ -48,7 +48,6 @@
                 </dl>
             </div>
         </div>
-
     </div>
     {{-- Nothing in the world is as soft and yielding as water. --}}
 </div>

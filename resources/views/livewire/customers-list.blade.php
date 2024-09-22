@@ -2,9 +2,22 @@
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
+
+
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+
                     <div class="flex flex-row justify-between bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+
                         <h6 class="text-white text-capitalize ps-3">Customers </h6>
+                        <button wire:click="exportCustomers" type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Excel</button>
+                        <button wire:click="exportPDF" type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">PDF</button>
+
+                        <div x-data="{ search: @entangle('search') }">
+                            <input
+                                wire:model.live="search" type="text"
+                                placeholder="Search"
+                                class="block w-full p-2 ps-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
                         <a href="/register-cusotmer" wire:navigate class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"> Add New </a>
                     </div>
 
@@ -91,7 +104,7 @@
                                         <a wire:navigate href="{{route('edit',['id'=>$customer->id])}}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600" data-tooltip-target="tooltip-edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a wire:navigate href="{{route('details')}}" class="mx-2 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600" data-tooltip-target="tooltip-edit">
+                                        <a wire:navigate href="{{route('customer-details',['id'=>$customer->id])}}" class="mx-2 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600" data-tooltip-target="tooltip-edit">
                                             <i class="fas fa-eye"></i>
                                         </a>
 
