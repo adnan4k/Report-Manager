@@ -17,13 +17,14 @@ class CustomersList extends Component
 
     public function mount()
     {
+   ;   
         $this->fetchCustomers(); // Call the fetchCustomers method on mount
     }
 
     // Method to fetch and filter customers based on search term
     public function fetchCustomers()
     {
-        $this->customers = User::with(['businesses', 'reminders'])
+        $this->customers =   User::with(['businesses', 'reminders'])
             ->where('name', 'like', '%' . $this->search . '%') // Filter by name
             ->orWhere('email', 'like', '%' . $this->search . '%') // Filter by email
             ->orWhereHas('businesses', function ($businessQuery) {
@@ -31,6 +32,8 @@ class CustomersList extends Component
                     ->orWhere('tin', 'like', '%' . $this->search . '%');
             })->orWhere('phone', 'like', '%' . $this->search . '%') // Filter by email
             ->get();
+           
+
     }
     // Method called when search input is updated
     public function updatedSearch()

@@ -17,7 +17,7 @@
                             Full name
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            John Doe
+                            {{$customer->name}}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -25,7 +25,7 @@
                             Email address
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            johndoe@example.com
+                            {{$customer->email}}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -33,7 +33,7 @@
                             Phone number
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            (123) 456-7890
+                            {{$customer->phone}}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -41,13 +41,24 @@
                             Address
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            123 Main St<br>
-                            Anytown, USA 12345
+                            {{$customer->address}}
+
                         </dd>
                     </div>
                 </dl>
             </div>
         </div>
     </div>
-    {{-- Nothing in the world is as soft and yielding as water. --}}
+    <!-- #region -->
+
+    @if (Route::currentRouteName() == 'business-detail')
+    @livewire('business-detail', ['customerId' => $customerId])
+
+    @endif
+    @if (Route::currentRouteName() == 'report-detail')
+    @livewire('report-details', ['customerId' => $customerId])
+
+
+    @endif
+
 </div>

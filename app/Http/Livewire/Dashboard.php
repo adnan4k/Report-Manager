@@ -13,6 +13,7 @@ class Dashboard extends Component
   public $totalUsers;
   public $reported;
   public $unreported;
+  public $tobeReported;
 
   public function mount()
   {
@@ -39,5 +40,9 @@ class Dashboard extends Component
   public function render()
   {
     return view('livewire.dashboard');
+  }
+
+  public function todayReport(){
+    
   }
 }

@@ -49,15 +49,15 @@
                     </a>
 
                     <!-- Dropdown Menu -->
-                    <ul x-show="open" localStorage.setItem('dropdown-open', open) class="ml-3 text-sm text-white mt-2 space-y-2">
+                    <ul x-show="open" localStorage.setItem('dropdown-open', open) class="ml-3 hover:text-white-100 text-sm text-white mt-2 space-y-2">
                         <li>
-                            <a href="{{ route('tax-reports') }}" class="{{ Route::currentRouteName() == 'tax-reports' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }} flex items-center space-x-2 p-2  rounded">
+                            <a href="{{ route('tax-reports') }}" class="{{ Route::currentRouteName() == 'tax-reports' ? 'bg-gradient-primary' : 'hover:bg-white-700' }} flex items-center space-x-2 p-2  rounded">
                                 <i class="fa fa-calculator" aria-hidden="true"></i>
                                 <span>Tax Reports</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('payroll-reports') }}" class="{{ Route::currentRouteName() == 'payroll-reports' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }} flex items-center space-x-2 p-2  rounded">
+                            <a href="{{ route('payroll-reports') }}" class="{{ Route::currentRouteName() == 'payroll-reports' ? 'bg-gradient-primary' : 'hover:bg-white-700' }} flex items-center space-x-2 p-2  rounded">
                                 <i class="fa fa-users" aria-hidden="true"></i>
                                 <span>Payroll Reports</span>
                             </a>

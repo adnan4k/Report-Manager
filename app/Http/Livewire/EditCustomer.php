@@ -34,10 +34,14 @@ class EditCustomer extends Component
     public $pension;
     public $tax;
     public $userId;
+    public function mount($id){
+        $this->edit($id);
+    }
     public function render()
     {
         return view('livewire.edit-customer');
     }
+
     public function edit($id)
     {
         
@@ -68,7 +72,6 @@ class EditCustomer extends Component
         $this->tax = $document->tax;
         $this->income_statement = $document->income_statement;
         $this->balance_sheet = $document->balance_sheet;
-        return view(view: 'livewire.multistep');
 
     }
     public function incrementSteps()

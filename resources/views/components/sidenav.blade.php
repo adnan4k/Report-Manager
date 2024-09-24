@@ -11,23 +11,22 @@
         <div class="h-full py-2 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
                 <li>
-                    <a wire:navigate href="{{route('customer-details',['id' => session('customerId')])}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <a wire:navigate href="{{route('customer-details',['id' =>$customer->id])}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i class="fas fa-user-circle text-lg text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-
-
+                        {{$customer->id}}
                         <span class="ms-3">Customer Details</span>
                     </a>
                 </li>
                 <li>
-                    <a wire:navigate href="{{ route('business-detail', ['id' => session('customerId')]) }}"
+                    <a wire:navigate href="{{route('business-detail',['id' =>$customerId])}}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i class="fas fa-building text-lg text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Business Detail</span>
+                        <span class="flex-1     ms-3 whitespace-nowrap">Business Detail</span>
                     </a>
 
                 </li>
                 <li>
-                    <a wire:navigate href="{{route('report-detail',['id' => session('customerId')])}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <a wire:navigate href="{{route('report-detail',['id' =>$customerId])}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i class="fas fa-file-alt text-lg text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
 
                         <span class="flex-1 ms-3 whitespace-nowrap">Reports</span>

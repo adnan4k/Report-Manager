@@ -25,10 +25,10 @@ Route::get(uri: 'statement-reports', action: StatementReports::class)->name('sta
 Route::get(uri: 'tax-reports', action: TotReports::class)->name('tax-reports');
 Route::get(uri: 'payroll-reports', action: PayrollReports::class)->name('payroll-reports');
 Route::get(uri: 'edit', action: PayrollReports::class)->name('payroll-reports');
-Route::get('edit/{id}', [EditCustomer::class, 'edit'])->name('edit');
+Route::get('edit/{id}', EditCustomer::class)->name('edit');
 Route::get('details',DetailsPage::class)->name('details');
 Route::get('customer-details/{id}',action: CustomerDetail::class)->name('customer-details');
-Route::get('business-detail/{id}',BusinessDetail::class)->name('business-detail');
+Route::get('business-detail',BusinessDetail::class)->name('business-detail');
 Route::get('report-detail',ReportDetail::class)->name('report-detail');
 
 
