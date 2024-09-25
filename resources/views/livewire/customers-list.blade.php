@@ -82,7 +82,7 @@
                                         <a wire:navigate href="{{ route('edit', ['id' => $customer->id]) }}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600" data-tooltip-target="tooltip-edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a wire:navigate href="{{ route('customer-details', ['id' => $customer->id]) }}" class="mx-2 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600" data-tooltip-target="tooltip-edit">
+                                        <a wire:navigate href="{{ route('customer-detail', ['id' => $customer->id]) }}" class="mx-2 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600" data-tooltip-target="tooltip-edit">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     

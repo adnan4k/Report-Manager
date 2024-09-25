@@ -121,5 +121,72 @@ class EditCustomer extends Component
 
         return $validated;
     }
+    public function submit()
+    {
+        // Handle Step 1 (User Data)
+        // Assuming validation is done and passed
+        // $this->validation();
+        $user = new User();
+        $user->name = $this->name;
+        $user->email = $this->email;
+        $user->phone = $this->phone;
+        $user->address = $this->address;
+        $user->save();
+
+
+        // Handle Step 2 (Business and Report Data)
+
+        $business = new Business();
+        $business->user_id = $user->id;
+        $business->business_name = $this->business_name;
+        $business->tin = $this->tin;
+        $business->price = $this->price;
+        $business->save();
+
+        $report = new Report();
+        $report->business_id = $business->id;
+        $report->report_center = $this->report_center;
+        $report->tax_due_date = $this->taxtype_due_date;
+        $report->payroll_due_date = $this->payroll_due_date;
+        $report->statement_due_date = $this->statement_due_date;
+        $report->save();
+
+        // Handle Step 3 (Document Uploads)
+        // Assuming validation is done and passed
+        $document = new Document();
+        $document->business_id = $business->id;
+        
+        // Check and store each file only if it exists
+        if ($this->payroll) {
+            $document->payroll = $this->payroll->store('payrolls', 'public');
+        }
+        
+        if ($this->pension) {
+            $document->pension = $this->pension->store('pensions', 'public');
+        }
+        
+        if ($this->tax) {
+            $document->tax = $this->tax->store('taxs', 'public');
+        }
+        
+        if ($this->income_statement) {
+            $document->income_statement = $this->income_statement->store('income_statements', 'public');
+        }
+        
+        if ($this->balance_sheet) {
+            $document->balance_sheet = $this->balance_sheet->store('balance_sheets', 'public');
+        }
+        
+        $document->save();
+        
+
+
+        // Redirect or provide feedback
+        session()->flash('message', 'Customer Registration Successfully Completed.');
+        $this->dispatch('registered');
+
+        return redirect()->to('/all-customers');
+    }
+
 
 }

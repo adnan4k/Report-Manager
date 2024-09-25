@@ -13,7 +13,6 @@ class CustomerDetail extends Component
         $this->customerId = $id;
         $this->customer = User::find($id);
         session()->flash('customerId', $id);
-        dd($this->customer);
     }
     public function render()
     {

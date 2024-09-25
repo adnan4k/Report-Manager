@@ -1,6 +1,7 @@
 
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\CustomerRegistration;
 use App\Http\Livewire\BusinessDetail;
 use App\Http\Livewire\CustomerDetail;
@@ -27,9 +28,9 @@ Route::get(uri: 'payroll-reports', action: PayrollReports::class)->name('payroll
 Route::get(uri: 'edit', action: PayrollReports::class)->name('payroll-reports');
 Route::get('edit/{id}', EditCustomer::class)->name('edit');
 Route::get('details',DetailsPage::class)->name('details');
-Route::get('customer-details/{id}',action: CustomerDetail::class)->name('customer-details');
-Route::get('business-detail',BusinessDetail::class)->name('business-detail');
-Route::get('report-detail',ReportDetail::class)->name('report-detail');
+Route::get('customer-detail/{id}', [Controller::class,'showCustomer'])->name('customer-detail');
+Route::get('business-detail/{id}',[Controller::class,'showBusiness'])->name('business-detail');
+Route::get('report-detail/{id}',[Controller::class,'showReport'])->name('report-detail');
 
 
 

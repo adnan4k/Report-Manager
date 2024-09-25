@@ -1,3 +1,6 @@
+@extends('layouts.app')
+@section('slot')
+
 <div class="flex  flex-row h-screen overflow-hidden">
     @include('components.sidenav')
     <div class="ml-4 ">
@@ -60,5 +63,5 @@
 
 
     @endif
-
 </div>
+@endsection
