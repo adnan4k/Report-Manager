@@ -3,10 +3,24 @@ namespace App\Exports;
 
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class CustomersExport implements FromCollection, WithHeadings
+class CustomersExport implements FromCollection, WithHeadings,WithColumnWidths
 {
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 15,
+            'B' => 20,
+            'C' => 30,
+            'D' => 40,
+            'E' => 20,
+            'F' => 10,
+            'G' => 10,
+
+        ];
+    }
     public function collection()
     {
         return User::with(['businesses'])->get()->map(function ($user) {
@@ -23,7 +37,6 @@ class CustomersExport implements FromCollection, WithHeadings
             // Flatten business data into a single string
             $businessNames = collect($businessData)->pluck('Business Name')->implode(', ');
             $prices = collect($businessData)->pluck('Price')->implode(', ');
-            $paymentStatuses = collect($businessData)->pluck('Payment Status')->implode(', ');
             $tins = collect($businessData)->pluck('TIN')->implode(', ');
 
             // Return combined data for each user
@@ -34,7 +47,6 @@ class CustomersExport implements FromCollection, WithHeadings
                 'Address' => $user->address ?? 'N/A',
                 'Business Name' => $businessNames ?? 'N/A',
                 'Price' => $prices ?? 'N/A',
-                'Payment Status' => $paymentStatuses ?? 'Not Paid',
                 'TIN' => $tins ?? 'N/A'
             ];
         });
@@ -49,7 +61,6 @@ class CustomersExport implements FromCollection, WithHeadings
             'Address',
             'Business Name',
             'Price',
-            'Payment Status',
             'TIN'
         ];
     }
