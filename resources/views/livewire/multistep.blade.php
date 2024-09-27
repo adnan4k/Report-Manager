@@ -100,6 +100,19 @@
                         <span class="text-danger"> {{$message}} </span>
                         @enderror
                     </div>
+                    <div class="mb-4">
+                        <label for="tax_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tax Type</label>
+
+                        <select wire:model="tax_type" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option selected>Choose tax type</option>
+                            <option value="vat">VAT</option>
+                            <option value="tot">TOT</option>
+                            
+                        </select>
+                        @error('tax_type')
+                        <span class="text-danger"> {{$message}} </span>
+                        @enderror
+                    </div>
 
                     <div class="mb-4">
 
@@ -159,7 +172,7 @@
                     <div class="mb-4">
 
                         <label for="payroll" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payroll Document</label>
-                        <input wire:model="payroll" type="file"  id="payroll" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
+                        <input wire:model="payroll" type="file" id="payroll" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
                         @error('payroll') <!-- Error Handling -->
                         <span class="text-danger"> {{$message}} </span>
                         @enderror

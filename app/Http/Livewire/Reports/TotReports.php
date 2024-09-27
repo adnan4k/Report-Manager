@@ -17,8 +17,9 @@ class TotReports extends Component
     {
 
         $this->reports = Report::select('id', 'tax_status', 'tax_due_date', 'business_id')  // Include 'id'
-            ->with(['business:id,business_name'])  // Load only specific fields from the related business
+            ->with(['business:id,business_name,tax_type'])  // Load only specific fields from the related business
             ->get();
+            // dd($this->reports);
 
         // Initialize statuses for each report
         foreach ($this->reports as $report) {

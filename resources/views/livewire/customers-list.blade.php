@@ -25,13 +25,15 @@
                                     <th scope="col" class="px-1 py-1 text-center">Phone</th>
                                     <th scope="col" class="px-3 py-1 text-center">Address</th>
                                     <th scope="col" class="px-1 py-1 text-center">Business Name</th>
-                                    <th scope="col" class="px-1 py-1 text-center">Payment</th>
+                                    <th scope="col" class="px-3 py-1 text-center">Report center</th>
+
                                     <th scope="col" class="px-1 py-1 text-center">TIN</th>
                                     <th scope="col" class="px-1 py-1 text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($customers as $customer)
+                                @if ($customer->name !== 'Admin')
                                 <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                                     <td class="px-2 py-1">
                                         <div class="flex flex-col justify-center">
@@ -48,6 +50,7 @@
                                         <p class="text-sm text-gray-900 dark:text-white">{{ $customer->address }}</p>
                                     </td>
 
+
                                     @if($customer->businesses->isNotEmpty())
                                     @foreach ($customer->businesses as $business)
                                     <td class="px-2 py-1 text-center">
@@ -55,26 +58,19 @@
                                             <span class="text-xs font-bold">{{ $business->business_name }}</span>
                                         </div>
                                     </td>
-
+                                    @foreach ($business->reports as $report )
                                     <td class="px-2 py-1 text-center">
-                                        <div class="flex flex-col justify-center">
-                                            <h6 class="text-sm font-medium text-gray-900 dark:text-white">{{ $business->price ?? '' }}</h6>
-                                            @if ($business->status == 0)
-                                            <p class="text-xs text-warning dark:text-gray-400">Not Paid</p>
-                                            @endif
-                                        </div>
+                                        <p class="text-sm text-gray-900 dark:text-white">{{ $report->report_center }}</p>
                                     </td>
+                                    @endforeach
+
 
                                     <td class="px-2 py-1 text-center">
                                         <div>
-                                            <span class="text-xs font-bold">{{ $business->tin }}</span>
+                                            <span class="text-xs font-bold">{{ $business->tin ? $business->tin:"N/A" }}</span>
                                         </div>
                                     </td>
                                     @endforeach
-                                    @else
-                                    <td colspan="3" class="px-2 py-1 text-center">
-                                        <span class="text-xs text-gray-500 dark:text-gray-400">N/A</span>
-                                    </td>
                                     @endif
 
                                     <td class="px-2 py-1 text-center">
@@ -85,13 +81,15 @@
                                         <a wire:navigate href="{{ route('customer-detail', ['id' => $customer->id]) }}" class="mx-2 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600" data-tooltip-target="tooltip-edit">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                    
+
                                         <!-- Delete Icon -->
                                         <button wire:click.prevent="deleteConfirmation({{ $customer->id }})" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600">
                                             <i class="fas fa-times"></i>
                                         </button>
                                     </td>
                                 </tr>
+                                @endif
+
                                 @endforeach
                             </tbody>
                         </table>

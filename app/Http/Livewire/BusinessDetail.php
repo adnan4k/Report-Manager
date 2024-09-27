@@ -9,8 +9,8 @@ class BusinessDetail extends Component
 {
     public $customer;
     public $customerId;
-    public function mount(){
-        $this->customerId = session('customerId');
+    public function mount($customerId){
+        $this->customerId = $customerId;
        $this->customer = User::where('id',$this->customerId)->with('businesses')->get();
     }
     public function render()

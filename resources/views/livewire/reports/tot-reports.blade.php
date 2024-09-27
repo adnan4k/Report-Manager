@@ -11,16 +11,20 @@
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-3 py-3">
                                     Business Name
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-3 py-3">
+                                    Tax type
+                                </th>
+                              
+                                <th scope="col" class="px-3 py-3">
                                     Status
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-center">
+                                <th scope="col" class="px-3 py-3 text-center">
                                     Due Date
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-center">
+                                <th scope="col" class="px-3 py-3 text-center">
                                     Action
                                 </th>
                             </tr>
@@ -28,18 +32,21 @@
                         <tbody>
                             @foreach ($reports as $report)
                             <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <td class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $report->business ? $report->business->business_name : 'N/A' }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="uppercase px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $report->business ? $report->business->tax_type : 'N/A' }}
+                                </td>
+                                <td class="px-3 py-4">
                                     <span class="badge {{ $report->tax_status ? 'bg-green-500' : 'bg-yellow-500' }} text-white px-2 py-1 rounded">
                                         {{ $report->tax_status ? 'Reported' : 'Pending' }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-3 py-4 text-center">
                                     <span class="text-gray-500">{{ \Carbon\Carbon::parse($report->tax_due_date)->format('F j, Y') }}</span>
                                 </td>
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-3 py-4 text-center">
                                     <button id="changeStatusButton-{{ $report->id }}" class="text-blue-600 dark:text-blue-500 hover:underline">
                                         <i class="fas fa-edit"></i>
                                     </button>

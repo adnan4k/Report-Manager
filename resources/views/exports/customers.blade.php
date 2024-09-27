@@ -8,18 +8,18 @@
         body {
             font-family: DejaVu Sans, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 100px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         table, th, td {
             border: 1px solid black;
         }
         th, td {
-            padding: 10px;
+            padding: 100px;
             text-align: left;
         }
         th {

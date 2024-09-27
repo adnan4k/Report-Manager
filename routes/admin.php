@@ -9,12 +9,14 @@ use App\Http\Livewire\CustomersList;
 use App\Http\Livewire\DetailsPage;
 use App\Http\Livewire\DocumentList;
 use App\Http\Livewire\EditCustomer;
+use App\Http\Livewire\Layout\Main;
 use App\Http\Livewire\Multistep;
 use App\Http\Livewire\ReportDetail;
 use App\Http\Livewire\ReportList;
 use App\Http\Livewire\Reports\PayrollReports;
 use App\Http\Livewire\Reports\StatementReports;
 use App\Http\Livewire\Reports\TotReports;
+use App\Models\Business;
 use Illuminate\Support\Facades\Route;
 
 Route::get('register', action: [CustomerRegistration::class, 'register'])->name('register');
@@ -28,9 +30,11 @@ Route::get(uri: 'payroll-reports', action: PayrollReports::class)->name('payroll
 Route::get(uri: 'edit', action: PayrollReports::class)->name('payroll-reports');
 Route::get('edit/{id}', EditCustomer::class)->name('edit');
 Route::get('details',DetailsPage::class)->name('details');
-Route::get('customer-detail/{id}', [Controller::class,'showCustomer'])->name('customer-detail');
-Route::get('business-detail/{id}',[Controller::class,'showBusiness'])->name('business-detail');
-Route::get('report-detail/{id}',[Controller::class,'showReport'])->name('report-detail');
+Route::get('customer-detail/{id}', CustomerDetail::class)->name('customer-detail');
+Route::get('business-detail',BusinessDetail::class)->name('business-detail');
+Route::get('report-detail',ReportDetail::class)->name('report-detail');
+Route::get('main/{id}',Main::class)->name('main');
+
 
 
 

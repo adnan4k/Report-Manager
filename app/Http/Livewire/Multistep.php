@@ -39,6 +39,7 @@ class Multistep extends Component
     public $pension;
     public $tax;
     public $userId;
+    public $tax_type;
 
 
     public function render()
@@ -80,6 +81,7 @@ class Multistep extends Component
         $business->user_id = $user->id;
         $business->business_name = $this->business_name;
         $business->tin = $this->tin;
+        $business->tax_type = $this->tax_type;
         $business->price = $this->price;
         $business->save();
 
@@ -125,6 +127,7 @@ class Multistep extends Component
         } elseif ($this->currentStep === 2) {
             // Validate Step 2 (Business Details)
             $validated = $this->validate([
+                'tax_type' =>'required',
                 'business_name' => 'required|string|max:255',
                 'report_center' => 'required|string|max:255',
                 'tin' => 'required|string|max:20',
@@ -136,12 +139,13 @@ class Multistep extends Component
         } elseif ($this->currentStep === 3) {
             // Validate Step 3 (Document Upload)
             $validated = $this->validate([
-                'payroll' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif',
-                'pension' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif',
-                'tax' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif',
-                'income_statement' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif',
-                'balance_sheet' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif',
+                'payroll' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'pension' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'tax' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'income_statement' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'balance_sheet' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
             ]);
+            
         }
 
         return $validated;

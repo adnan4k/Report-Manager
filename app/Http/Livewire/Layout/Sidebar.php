@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Layout;
 
 use Livewire\Component;
 
-class ReportDetail extends Component
+class Sidebar extends Component
 {
     public $customerId;
     public function mount($customerId){
@@ -12,6 +12,6 @@ class ReportDetail extends Component
     }
     public function render()
     {
-        return view('livewire.report-detail');
+        return view('livewire.layout.sidebar');
     }
 }

@@ -13,30 +13,30 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    public function showCustomer($id)
-    {
-        $customer = User::find($id);
+    // public function showCustomer($id)
+    // {
+    //     $customer = User::find($id);
 
-        session()->flash('customerId', $id);
+    //     session()->flash('customerId', $id);
 
-        return view('detial.customer-detail', compact('customer'));
-    }
+    //     return view('detial.customer-detail', compact('customer'));
+    // }
 
-    public function showBusiness($id)
-    {
-        $customer = User::find($id);
+    // public function showBusiness($id)
+    // {
+    //     $customer = User::find($id);
 
-        session()->flash('customerId', $id);
+    //     session()->flash('customerId', $id);
 
-        return view('detial.customer-detail', compact('customer'));
-    }
+    //     return view('detial.customer-detail', compact('customer'));
+    // }
 
-    public function showReport($id)
-    {
-        $customer = User::find($id);
+    // public function showReport($id)
+    // {
+    //     $customer = User::find($id);
 
-        session()->flash('customerId', $id);
+    //     session()->flash('customerId', $id);
 
-        return view('detial.customer-detail', compact('customer'));
-    }
+    //     return view('detial.customer-detail', compact('customer'));
+    // }
 }
