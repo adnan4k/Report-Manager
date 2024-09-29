@@ -26,14 +26,14 @@
                 </li>
                 <li>
                     <a href="{{ route('all-customers') }}"
-                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'register-cusotmer' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
+                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'all-customers' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
                         <i class="fas fa-user-circle text-lg"></i>
                         <span>Customers</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('document-list') }}"
-                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'user-management' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
+                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'document-list' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
                         <i class="fas fa-file-excel text-lg"></i>
                         <span>Documents</span>
                     </a>
@@ -53,7 +53,7 @@
                         <li>
                             <a href="{{ route('tax-reports') }}" class="{{ Route::currentRouteName() == 'tax-reports' ? 'bg-gradient-primary' : 'hover:bg-white-700' }} flex items-center space-x-2 p-2  rounded">
                                 <i class="fa fa-calculator" aria-hidden="true"></i>
-                                <span>Tax Reports</span>
+                                <span>VAT/TOT Reports</span>
                             </a>
                         </li>
                         <li>

@@ -195,9 +195,10 @@
                         information about the Documents of User.
                     </p>
                 </div>
+                @if ($businesses->first()->documents)
                 <div class="flex flex-row border-t border-gray-200 px-4 py-5 sm:p-0">
                     <dl class="sm:divide-y sm:divide-gray-200">
-                        <div class="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <div class="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                             <dt class="text-sm font-medium text-gray-500">
                                 Pension
                             </dt>
@@ -336,6 +337,10 @@
                         </div>
                     </dl>
                 </div>
+                @else
+                <h1 class="flex justify-center text-xl font-semibold" > No Documents</h1>
+                @endif
+              
             </div>
         </div>
     </div>

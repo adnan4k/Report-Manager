@@ -93,16 +93,20 @@ class Multistep extends Component
         $report->statement_due_date = $this->statement_due_date;
         $report->save();
 
-        // Handle Step 3 (Document Uploads)
-        // Assuming validation is done and passed
+        // Handle Step 3 (Document )
         $document = new Document();
         $document->business_id = $business->id;
-        $document->payroll = $this->payroll->store('payrolls', 'public');
-        $document->pension = $this->pension->store('pensions', 'public');
-        $document->tax = $this->tax->store('taxs', 'public');
-        $document->income_statement = $this->income_statement->store('income_statements', 'public');
-        $document->balance_sheet = $this->balance_sheet->store('balance_sheets', 'public');
+        
+        // Check if each file is provided before storing, otherwise set it to an empty string
+        $document->payroll = $this->payroll ? $this->payroll->store('payrolls', 'public') : '';
+        $document->pension = $this->pension ? $this->pension->store('pensions', 'public') : '';
+        $document->tax = $this->tax ? $this->tax->store('taxs', 'public') : '';
+        $document->income_statement = $this->income_statement ? $this->income_statement->store('income_statements', 'public') : '';
+        $document->balance_sheet = $this->balance_sheet ? $this->balance_sheet->store('balance_sheets', 'public') : '';
+        
+        // Save the document
         $document->save();
+        
 
 
         // Redirect or provide feedback
@@ -139,11 +143,11 @@ class Multistep extends Component
         } elseif ($this->currentStep === 3) {
             // Validate Step 3 (Document Upload)
             $validated = $this->validate([
-                'payroll' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
-                'pension' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
-                'tax' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
-                'income_statement' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
-                'balance_sheet' => 'required|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'payroll' => 'file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'pension' => 'file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'tax' => 'file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'income_statement' => 'file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'balance_sheet' => 'file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
             ]);
             
         }

@@ -19,7 +19,7 @@ class CustomerDetail extends Component
 
         // Fetch the customer using the provided id
         $this->customer = User::with(['businesses.reports', 'businesses.documents'])->find($id);
-        $this->businesses =Business::where('id',$id)
+        $this->businesses = Business::where('user_id',$id)
         ->with('documents') 
         ->get();
         // dd($this->businesses);

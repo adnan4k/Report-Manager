@@ -28,9 +28,14 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "App\\Helpers\\": "app/Helpers/GeneralHelper.php",
+
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+        "app/Helpers/GeneralHelper.php"
+    ]
     },
     "autoload-dev": {
         "psr-4": {

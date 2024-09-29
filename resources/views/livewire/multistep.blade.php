@@ -1,7 +1,7 @@
 <div class="container mx-auto p-6 border-4   rounded-xl shadow-lg " id="register">
 
 
-    <form class="" method="POST">
+    <form wire:submit="submit" class="" method="POST">
         @csrf
         <section class="content-header">
             <div class="container-fluid">
@@ -16,20 +16,12 @@
         <ol id="stepper" class="flex justify-center items-center w-full text-sm text-gray-500 font-medium sm:text-base mb-2">
             {{$currentStep}} Out of {{$totalStep}}
         </ol>
-        @script
-        <script>
-            $wire.on('post-created', () => {
-                console.log('here is something')
-                Toastify({
-                    text: "Customer Registration Successfully Completed.",
-                    className: "info",
-                    style: {
-                        background: "linear-gradient(to right, #00b09b, #96c93d)",
-                    }
-                }).showToast();
-            })
-        </script>
-        @endscript
+        <div wire:loading wire:target="anyAction">
+            <!-- Spinner -->
+            <div class="flex justify-center items-center">
+                <div class="w-12 h-12 border-4 border-dashed rounded-full animate-spin border-blue-500"></div>
+            </div>
+        </div>
 
         <!-- Step 1: User Details -->
         @if ($currentStep === 1)
@@ -107,7 +99,7 @@
                             <option selected>Choose tax type</option>
                             <option value="vat">VAT</option>
                             <option value="tot">TOT</option>
-                            
+
                         </select>
                         @error('tax_type')
                         <span class="text-danger"> {{$message}} </span>
@@ -235,10 +227,26 @@
 
                 @endif
                 @if ($currentStep === $totalStep)
-                <button wire:click="submit" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                <button type="submit" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit
+
+                </button>
                 @endif
         </div>
         <!-- Step 3: Document Upload -->
 
     </form>
+    @script
+    <script>
+        $wire.on('registered', () => {
+            //
+            Toastify({
+                text: "Customer Registration Successfully Completed.",
+                className: "info",
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+            }).showToast();
+        });
+    </script>
+    @endscript
 </div>

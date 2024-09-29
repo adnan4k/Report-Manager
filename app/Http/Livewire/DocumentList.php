@@ -3,16 +3,69 @@
 namespace App\Http\Livewire;
 
 use App\Models\Business;
+use App\Models\Document;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use ZipArchive;
 
 class DocumentList extends Component
 {
+    use WithFileUploads;
+
+    
     public $businesses;
+    public $selectedDocumentType;
+    public $selectedBusiness;
+    public $file;
+    protected $rules = [
+        'selectedBusiness' => 'required|exists:businesses,id',
+        'selectedDocumentType' => 'required',
+        'file' => 'required|file|max:2048', // Maximum file size 2MB
+    ];
+
     public function mount()
     {
         $this->businesses = Business::with('documents')->get();
 
+    }
+
+    public function uploadDocument()
+    {
+        $this->validate();
+
+        // Fetch the selected business
+        $business = Business::find($this->selectedBusiness);
+
+        // Create a new document instance
+        $document = new Document();
+        $document->business_id = $business->id;
+
+        // Store the file based on document type
+        switch ($this->selectedDocumentType) {
+            case 'payroll':
+                $document->payroll = $this->file->store('payrolls', 'public');
+                break;
+            case 'pension':
+                $document->pension = $this->file->store('pensions', 'public');
+                break;
+            case 'tax':
+                $document->tax = $this->file->store('taxs', 'public');
+                break;
+            case 'income_statement':
+                $document->income_statement = $this->file->store('income_statements', 'public');
+                break;
+            case 'balance_sheet':
+                $document->balance_sheet = $this->file->store('balance_sheets', 'public');
+                break;
+        }
+
+        $document->save();
+
+        // Reset fields after upload
+        $this->reset(['file', 'selectedDocumentType']);
+        
+        // Emit success message
+        $this->dispatch( 'Document uploaded successfully');
     }
     public function downloadDocuments($businessId)
     {
