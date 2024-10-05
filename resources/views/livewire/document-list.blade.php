@@ -127,19 +127,19 @@
                                         </div>
                                     </td>
                                     <td class="py-1 px-2">
+                                        @if (count($document->payroll) > 0)
+                                        @foreach ($document->payroll as $payroll)
                                         <div class="flex flex-row justify-center">
-
                                             <div x-data="{ isHovered: false }"
                                                 @mouseenter="isHovered = true"
                                                 @mouseleave="isHovered = false"
                                                 class="relative inline-block">
-
                                                 <!-- Image -->
-                                                <img src="{{ asset('storage/'.$document->payroll) }}" alt="Payroll Document" class="h-14 w-16 object-cover rounded-md">
+                                                <img src="{{ asset('storage/'.$payroll) }}" alt="Payroll Document" class="h-14 w-16 object-cover rounded-md">
 
                                                 <!-- Download Icon -->
                                                 <a x-show="isHovered"
-                                                    href="{{ asset('storage/'.$document->payroll) }}"
+                                                    href="{{ asset('storage/'.$payroll) }}"
                                                     class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md transition duration-300"
                                                     download>
                                                     <!-- Font Awesome Icon -->
@@ -147,7 +147,12 @@
                                                 </a>
                                             </div>
                                         </div>
+                                        @endforeach
+                                        @else
+                                        <span>No payroll documents available</span>
+                                        @endif
                                     </td>
+
 
                                     <td class="py-2 px-4">
                                         <button wire:click="downloadDocuments({{$business->id}})">
@@ -217,6 +222,9 @@
                                             <input wire:model="file" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
                                         </div>
                                     </div>
+
+
+
 
                                     <!-- Buttons -->
                                     <div class="flex justify-between">

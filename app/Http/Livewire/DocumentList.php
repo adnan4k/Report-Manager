@@ -25,7 +25,10 @@ class DocumentList extends Component
 
     public function mount()
     {
-        $this->businesses = Business::with('documents')->get();
+        $this->businesses = Business::with('documents')
+        ->latest()
+        ->get();
+        dd($this->businesses);
 
     }
 

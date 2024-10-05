@@ -9,12 +9,12 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade'); // Change 'businesses_id' to 'business_id'
-            $table->string('tax');
-            $table->string('pension');
-            $table->string('income_statement');
-            $table->string('balance_sheet');
-            $table->string('payroll');
+            $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade');
+            $table->json('tax')->nullable(); // Change to JSON to store multiple documents
+            $table->json('pension')->nullable(); // Change to JSON to store multiple documents
+            $table->json('income_statement')->nullable(); // Change to JSON to store multiple documents
+            $table->json('balance_sheet')->nullable(); // Change to JSON to store multiple documents
+            $table->json('payroll')->nullable(); // Change to JSON to store multiple documents
             $table->timestamps();
             $table->softDeletes();
         });
