@@ -38,10 +38,17 @@
                         <span>Documents</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{route('payments')}}"
+                        class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'payments' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
+                        <i class="fas fa-wallet"></i>
+                         <span>Payments</span>
+                    </a>
+                </li>
 
                 <!-- Main Sidebar Link -->
-                <li x-data="{ open: localStorage.getItem('dropdown-open') === 'true' }">
-                    <a href="#" @click.prevent="open = !open; localStorage.setItem('dropdown-open', open)"
+                <li x-data="{ open:  true }">
+                    <a href="#" @click.prevent="open = !open; "
                         class="flex items-center space-x-2 p-2 rounded text-white transition {{ Route::currentRouteName() == 'reports' ? 'bg-gradient-primary' : 'hover:bg-gray-700' }}">
                         <i class="fa fa-file" aria-hidden="true"></i>
                         <span>Reports</span>
@@ -49,7 +56,7 @@
                     </a>
 
                     <!-- Dropdown Menu -->
-                    <ul x-show="open" localStorage.setItem('dropdown-open', open) class="ml-3 hover:text-white-100 text-sm text-white mt-2 space-y-2">
+                    <ul x-show="open" class="ml-3 hover:text-white-100 text-sm text-white mt-2 space-y-2">
                         <li>
                             <a href="{{ route('tax-reports') }}" class="{{ Route::currentRouteName() == 'tax-reports' ? 'bg-gradient-primary' : 'hover:bg-white-700' }} flex items-center space-x-2 p-2  rounded">
                                 <i class="fa fa-calculator" aria-hidden="true"></i>

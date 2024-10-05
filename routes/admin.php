@@ -11,6 +11,7 @@ use App\Http\Livewire\DocumentList;
 use App\Http\Livewire\EditCustomer;
 use App\Http\Livewire\Layout\Main;
 use App\Http\Livewire\Multistep;
+use App\Http\Livewire\PaymentComponent;
 use App\Http\Livewire\ReportDetail;
 use App\Http\Livewire\ReportList;
 use App\Http\Livewire\Reports\PayrollReports;
@@ -32,6 +33,7 @@ Route::get('edit/{id}', EditCustomer::class)->name('edit');
 Route::get('details',DetailsPage::class)->name('details');
 Route::get('customer-detail/{id}', CustomerDetail::class)->name('customer-detail');
 Route::get('main/{id}',Main::class)->name('main');
+Route::get('payments',PaymentComponent::class)->name('payments');
 
 
 

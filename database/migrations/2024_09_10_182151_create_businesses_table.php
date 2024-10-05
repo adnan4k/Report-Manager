@@ -14,7 +14,6 @@ class CreateBusinessesTable extends Migration
             $table->string('business_name');
             $table->string('address')->nullable();
            
-            $table->decimal('price', 15, 2)->nullable(); // Price associated with the business
             $table->timestamps();
             $table->softDeletes();
         });

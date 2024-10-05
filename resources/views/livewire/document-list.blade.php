@@ -1,4 +1,4 @@
-<div x-data="{ open: false }">
+<div x-data="{ open: @entangle('open') }">
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
@@ -29,139 +29,121 @@
                                 <tr class="border-b">
                                     <td class="py-2 px-4">{{ $business->business_name }}</td>
 
+                                    <!-- Tax Document Files -->
                                     <td class="py-1 px-2">
                                         <div class="flex flex-row justify-center">
-                                            <div x-data="{ isHovered: false }"
-                                                @mouseenter="isHovered = true"
-                                                @mouseleave="isHovered = false"
-                                                class="relative inline-block">
-
-                                                <!-- Image -->
-                                                <img src="{{ asset('storage/'.$document->tax) }}" alt="Tax Document" class="flex flex-row justify-center h-14 w-16 object-cover rounded-md">
-
-                                                <!-- Download Icon -->
-                                                <a x-show="isHovered"
-                                                    href="{{ asset('storage/'.$document->tax) }}"
-                                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md transition duration-300"
-                                                    download>
-                                                    <!-- Font Awesome Icon -->
-                                                    <i class="fas fa-download text-2xl"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <!-- Repeat for other document types -->
-
-                                    <td class="py-1 px-2">
-                                        <div class="flex flex-row justify-center">
+                                            @foreach(json_decode($document->tax, true) ?? [] as $index =>$file)
+                                            @if($loop->last)
 
                                             <div x-data="{ isHovered: false }"
                                                 @mouseenter="isHovered = true"
                                                 @mouseleave="isHovered = false"
-                                                class="relative inline-block">
+                                                class="relative inline-block mx-1">
 
-                                                <!-- Image -->
-                                                <img src="{{ asset('storage/'.$document->income_statement) }}" alt="Income Statement Document" class="h-14 w-16 object-cover rounded-md">
+                                                <img src="{{ fileTypeChecker($file) ? asset('storage/'.$file) : asset('/assets/images/placeholders/No-PDF-Placeholder.png') }}" alt="Income Statement Document" class="h-14 w-16 object-cover rounded-md">
 
-                                                <!-- Download Icon -->
-                                                <a x-show="isHovered"
-                                                    href="{{ asset('storage/'.$document->income_statement) }}"
-                                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md transition duration-300"
-                                                    download>
-                                                    <!-- Font Awesome Icon -->
+                                                <a x-show="isHovered" href="{{ asset('storage/'.$file) }}" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md transition duration-300" download>
                                                     <i class="fas fa-download text-2xl"></i>
                                                 </a>
                                             </div>
+                                            @endif
+                                            @endforeach
                                         </div>
                                     </td>
 
-                                    <!-- Continue similar blocks for Balance Sheet, Pension, and Payroll -->
-
+                                    <!-- Income Statement Document Files -->
                                     <td class="py-1 px-2">
                                         <div class="flex flex-row justify-center">
+                                            @foreach(json_decode($document->income_statement, true) ?? [] as $file)
+                                            @if($loop->last)
 
                                             <div x-data="{ isHovered: false }"
                                                 @mouseenter="isHovered = true"
                                                 @mouseleave="isHovered = false"
-                                                class="relative inline-block">
+                                                class="relative inline-block mx-1">
 
-                                                <!-- Image -->
-                                                <img src="{{ asset('storage/'.$document->balance_sheet) }}" alt="Balance Sheet Document" class="h-14 w-16 object-cover rounded-md">
+                                                <img src="{{ fileTypeChecker($file) ? asset('storage/'.$file) : asset('/assets/images/placeholders/No-PDF-Placeholder.png') }}" alt="Income Statement Document" class="h-14 w-16 object-cover rounded-md">
 
-                                                <!-- Download Icon -->
-                                                <a x-show="isHovered"
-                                                    href="{{ asset('storage/'.$document->balance_sheet) }}"
-                                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md transition duration-300"
-                                                    download>
-                                                    <!-- Font Awesome Icon -->
+                                                <a x-show="isHovered" href="{{ asset('storage/'.$file) }}" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md transition duration-300" download>
                                                     <i class="fas fa-download text-2xl"></i>
                                                 </a>
                                             </div>
+                                            @endif
+                                            @endforeach
                                         </div>
                                     </td>
-
                                     <td class="py-1 px-2">
                                         <div class="flex flex-row justify-center">
+                                            @foreach(json_decode($document->balance_sheet, true) ?? [] as $file)
+                                            @if($loop->last)
 
                                             <div x-data="{ isHovered: false }"
                                                 @mouseenter="isHovered = true"
                                                 @mouseleave="isHovered = false"
-                                                class="relative inline-block">
+                                                class="relative inline-block mx-1">
 
-                                                <!-- Image -->
-                                                <img
-                                                    src="{{ fileTypeChecker('storage/'.$document->pension) }}"
-                                                    alt="Document"
-                                                    class="h-14 w-16 object-cover rounded-md">
+                                                <img src="{{ fileTypeChecker($file) ? asset('storage/'.$file) : asset('/assets/images/placeholders/No-PDF-Placeholder.png') }}" alt="Income Statement Document" class="h-14 w-16 object-cover rounded-md">
 
-                                                <!-- Download Icon -->
-                                                <a x-show="isHovered"
-                                                    href="{{ asset('storage/'.$document->pension) }}"
-                                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md transition duration-300"
-                                                    download>
-                                                    <!-- Font Awesome Icon -->
+                                                <a x-show="isHovered" href="{{ asset('storage/'.$file) }}" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md transition duration-300" download>
                                                     <i class="fas fa-download text-2xl"></i>
                                                 </a>
                                             </div>
+                                            @endif
+                                            @endforeach
                                         </div>
                                     </td>
                                     <td class="py-1 px-2">
-                                        @if (count($document->payroll) > 0)
-                                        @foreach ($document->payroll as $payroll)
                                         <div class="flex flex-row justify-center">
+                                            @foreach(json_decode($document->pension, true) ?? [] as $index => $file)
+                                            @if($loop->last)
                                             <div x-data="{ isHovered: false }"
                                                 @mouseenter="isHovered = true"
                                                 @mouseleave="isHovered = false"
-                                                class="relative inline-block">
-                                                <!-- Image -->
-                                                <img src="{{ asset('storage/'.$payroll) }}" alt="Payroll Document" class="h-14 w-16 object-cover rounded-md">
+                                                class="relative inline-block mx-1">
 
-                                                <!-- Download Icon -->
-                                                <a x-show="isHovered"
-                                                    href="{{ asset('storage/'.$payroll) }}"
-                                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md transition duration-300"
-                                                    download>
-                                                    <!-- Font Awesome Icon -->
+
+                                                <img src="{{ fileTypeChecker($file) ? asset('storage/'.$file) : asset('/assets/images/placeholders/No-PDF-Placeholder.png') }}" alt="Income Statement Document" class="h-14 w-16 object-cover rounded-md">
+
+                                                <a x-show="isHovered" href="{{ asset('storage/'.$file) }}" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md transition duration-300" download>
                                                     <i class="fas fa-download text-2xl"></i>
                                                 </a>
                                             </div>
+                                            @endif
+                                            @endforeach
                                         </div>
-                                        @endforeach
-                                        @else
-                                        <span>No payroll documents available</span>
-                                        @endif
+
                                     </td>
 
+
+                                    <!-- Repeat similar blocks for Balance Sheet, Pension, Payroll -->
+                                    <!-- Example for Payroll -->
+                                    <td class="py-1 px-2">
+                                        <div class="flex flex-row justify-center">
+                                            @foreach(json_decode($document->payroll, true) ?? [] as $file)
+                                            @if($loop->last)
+
+                                            <div x-data="{ isHovered: false }"
+                                                @mouseenter="isHovered = true"
+                                                @mouseleave="isHovered = false"
+                                                class="relative inline-block mx-1">
+
+                                                <img src="{{ fileTypeChecker($file) ? asset('storage/'.$file) : asset('/assets/images/placeholders/No-PDF-Placeholder.png') }}" alt="Income Statement Document" class="h-14 w-16 object-cover rounded-md">
+
+                                                <a x-show="isHovered" href="{{ asset('storage/'.$file) }}" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md transition duration-300" download>
+                                                    <i class="fas fa-download text-2xl"></i>
+                                                </a>
+                                            </div>
+                                            @endif
+                                            @endforeach
+                                        </div>
+                                    </td>
 
                                     <td class="py-2 px-4">
-                                        <button wire:click="downloadDocuments({{$business->id}})">
+                                        <button wire:click="downloadDocuments({{ $business->id }})">
                                             <i class="fas fa-download text-2xl"></i>
-
                                         </button>
                                     </td>
                                 </tr>
-
                                 @endforeach
                                 @else
                                 <tr class="border-b">
@@ -169,6 +151,7 @@
                                 </tr>
                                 @endif
                                 @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -242,15 +225,18 @@
                     </div>
                     @script
                     <script>
-                        Toastify({
-                            text: "Document Successfully uploaded",
-                            className: "info",
-                            style: {
-                                background: "linear-gradient(to right, #00b09b, #96c93d)",
-                            }
-                        }).showToast();
+                        Livewire.on('document-uploaded', function() {
+                            Toastify({
+                                text: "Document Successfully uploaded",
+                                className: "info",
+                                style: {
+                                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                                }
+                            }).showToast();
+                        });
                     </script>
                     @endscript
+
 
                 </div>
             </div>

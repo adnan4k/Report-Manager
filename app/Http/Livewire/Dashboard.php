@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Business;
+use App\Models\Payment;
 use App\Models\Report;
 use App\Models\User;
 use Carbon\Carbon;
@@ -20,7 +21,7 @@ class Dashboard extends Component
   public function mount()
   {
 
-    $this->totalMoney = Business::sum('price');
+    $this->totalMoney = Payment::sum('paid_amount');
     $this->totalUsers = User::count();
     $this->todayReport();
     $this->reported = Report::where(function ($query) {

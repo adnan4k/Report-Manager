@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Payment;
 use Livewire\WithFileUploads; // Import the trait
 
 
@@ -61,7 +62,7 @@ class Multistep extends Component
         }
     }
 
- 
+
     public function submit()
     {
         // Handle Step 1 (User Data)
@@ -78,12 +79,17 @@ class Multistep extends Component
         // Handle Step 2 (Business and Report Data)
 
         $business = new Business();
+        $payment = new Payment();
         $business->user_id = $user->id;
         $business->business_name = $this->business_name;
         $business->tin = $this->tin;
         $business->tax_type = $this->tax_type;
-        $business->price = $this->price;
+        $payment->initial_price = $this->price;
+        $payment->user_id = $user->id;
         $business->save();
+        $payment->business_id = $business->id;
+        $payment->save();
+
 
         $report = new Report();
         $report->business_id = $business->id;
@@ -94,19 +100,53 @@ class Multistep extends Component
         $report->save();
 
         // Handle Step 3 (Document )
-        $document = new Document();
+        $document = Document::where('business_id', $business->id)->first() ?? new Document();
         $document->business_id = $business->id;
-        
-        // Check if each file is provided before storing, otherwise set it to an empty string
-        $document->payroll = $this->payroll ? $this->payroll->store('payrolls', 'public') : '';
-        $document->pension = $this->pension ? $this->pension->store('pensions', 'public') : '';
-        $document->tax = $this->tax ? $this->tax->store('taxs', 'public') : '';
-        $document->income_statement = $this->income_statement ? $this->income_statement->store('income_statements', 'public') : '';
-        $document->balance_sheet = $this->balance_sheet ? $this->balance_sheet->store('balance_sheets', 'public') : '';
-        
+
+        // Handle payroll
+        $existingPayroll = $document->payroll ? json_decode($document->payroll, true) : [];
+        if ($this->payroll) {
+            $newPayroll = $this->payroll->store('payrolls', 'public');
+            $existingPayroll[] = $newPayroll;
+        }
+        $document->payroll = json_encode($existingPayroll);
+
+        // Handle pension
+        $existingPension = $document->pension ? json_decode($document->pension, true) : [];
+        if ($this->pension) {
+            $newPension = $this->pension->store('pensions', 'public');
+            $existingPension[] = $newPension;
+        }
+        $document->pension = json_encode($existingPension);
+
+        // Handle tax
+        $existingTax = $document->tax ? json_decode($document->tax, true) : [];
+        if ($this->tax) {
+            $newTax = $this->tax->store('taxs', 'public');
+            $existingTax[] = $newTax;
+        }
+        $document->tax = json_encode($existingTax);
+
+        // Handle income_statement
+        $existingIncomeStatement = $document->income_statement ? json_decode($document->income_statement, true) : [];
+        if ($this->income_statement) {
+            $newIncomeStatement = $this->income_statement->store('income_statements', 'public');
+            $existingIncomeStatement[] = $newIncomeStatement;
+        }
+        $document->income_statement = json_encode($existingIncomeStatement);
+
+        // Handle balance_sheet
+        $existingBalanceSheet = $document->balance_sheet ? json_decode($document->balance_sheet, true) : [];
+        if ($this->balance_sheet) {
+            $newBalanceSheet = $this->balance_sheet->store('balance_sheets', 'public');
+            $existingBalanceSheet[] = $newBalanceSheet;
+        }
+        $document->balance_sheet = json_encode($existingBalanceSheet);
+
         // Save the document
         $document->save();
-        
+
+
 
 
         // Redirect or provide feedback
@@ -131,7 +171,7 @@ class Multistep extends Component
         } elseif ($this->currentStep === 2) {
             // Validate Step 2 (Business Details)
             $validated = $this->validate([
-                'tax_type' =>'required',
+                'tax_type' => 'required',
                 'business_name' => 'required|string|max:255',
                 'report_center' => 'required|string|max:255',
                 'tin' => 'required|string|max:20',
@@ -149,7 +189,6 @@ class Multistep extends Component
                 'income_statement' => 'file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
                 'balance_sheet' => 'file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
             ]);
-            
         }
 
         return $validated;

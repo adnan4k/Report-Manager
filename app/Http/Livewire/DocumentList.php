@@ -12,11 +12,12 @@ class DocumentList extends Component
 {
     use WithFileUploads;
 
-    
+
     public $businesses;
     public $selectedDocumentType;
     public $selectedBusiness;
     public $file;
+    public $open = false;
     protected $rules = [
         'selectedBusiness' => 'required|exists:businesses,id',
         'selectedDocumentType' => 'required',
@@ -26,9 +27,10 @@ class DocumentList extends Component
     public function mount()
     {
         $this->businesses = Business::with('documents')
-        ->latest()
-        ->get();
-        dd($this->businesses);
+            ->latest()
+            ->get();
+          $vars =   json_decode($this->businesses->first()->documents->first()->tax, true);
+        //   dd($this->businesses);
 
     }
 
@@ -37,39 +39,62 @@ class DocumentList extends Component
         $this->validate();
 
         // Fetch the selected business
-        $business = Business::find($this->selectedBusiness);
+        $business = Business::with('documents')
+        ->where('id',$this->selectedBusiness)
+        ->get();
+        // Fetch the existing document
+        $document = $business->first()->documents->first();
 
-        // Create a new document instance
-        $document = new Document();
-        $document->business_id = $business->id;
-
-        // Store the file based on document type
+        // Store the file based on document type and append it to the existing files
         switch ($this->selectedDocumentType) {
             case 'payroll':
-                $document->payroll = $this->file->store('payrolls', 'public');
+                $existingPayroll = $document->payroll ? json_decode($document->payroll, true) : [];
+                $newPayroll = $this->file->store('payrolls', 'public');
+                $existingPayroll[] = $newPayroll;
+                $document->payroll = json_encode($existingPayroll);
                 break;
+
             case 'pension':
-                $document->pension = $this->file->store('pensions', 'public');
+                $existingPension = $document->pension ? json_decode($document->pension, true) : [];
+                $newPension = $this->file->store('pensions', 'public');
+                $existingPension[] = $newPension;
+                $document->pension = json_encode($existingPension);
                 break;
+
             case 'tax':
-                $document->tax = $this->file->store('taxs', 'public');
+                $existingTax = $document->tax ? json_decode($document->tax, true) : [];
+                $newTax = $this->file->store('taxs', 'public');
+                $existingTax[] = $newTax;
+                $document->tax = json_encode($existingTax);
                 break;
+
             case 'income_statement':
-                $document->income_statement = $this->file->store('income_statements', 'public');
+                $existingIncomeStatement = $document->income_statement ? json_decode($document->income_statement, true) : [];
+                $newIncomeStatement = $this->file->store('income_statements', 'public');
+                $existingIncomeStatement[] = $newIncomeStatement;
+                $document->income_statement = json_encode($existingIncomeStatement);
                 break;
+
             case 'balance_sheet':
-                $document->balance_sheet = $this->file->store('balance_sheets', 'public');
+                $existingBalanceSheet = $document->balance_sheet ? json_decode($document->balance_sheet, true) : [];
+                $newBalanceSheet = $this->file->store('balance_sheets', 'public');
+                $existingBalanceSheet[] = $newBalanceSheet;
+                $document->balance_sheet = json_encode($existingBalanceSheet);
                 break;
         }
 
+        // Save the updated document
         $document->save();
 
         // Reset fields after upload
         $this->reset(['file', 'selectedDocumentType']);
-        
+
         // Emit success message
-        $this->dispatch( 'Document uploaded successfully');
+        $this->dispatch('document-uploaded');
+        $this->open = false;
+
     }
+
     public function downloadDocuments($businessId)
     {
         $business = Business::with('documents')->findOrFail($businessId);

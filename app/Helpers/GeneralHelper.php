@@ -19,10 +19,10 @@ if (!function_exists('fileTypeChecker')) {
 
         // Check if the file is an image
         if (in_array(strtolower($fileExtension), $imageExtensions)) {
-            return asset($filePath); // Return the actual file path if it's an image
+            return true; // Return the actual file path if it's an image
+        }else{
+            return false;
         }
 
-        // Return the placeholder for non-image file types
-        return $placeholders[$fileExtension] ?? asset('images/placeholders/file-placeholder.png');
     }
 }
