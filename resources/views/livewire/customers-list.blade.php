@@ -84,7 +84,7 @@
 
                                         <!-- Delete Icon -->
                                         <button wire:click.prevent="deleteConfirmation({{ $customer->id }})" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600">
-                                            <i class="fas fa-times"></i>
+                                        <i class="fas fa-trash-alt text-red-600 hover:text-red-900"></i>
                                         </button>
                                     </td>
                                 </tr>

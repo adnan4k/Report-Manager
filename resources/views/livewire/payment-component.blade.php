@@ -1,12 +1,12 @@
-<div x-data="{ paymentModal: @entangle('paymentModal').defer }" class="row">
+<div x-data="{ paymentModal: false, selectedId: @entangle('selectedPaymentId') }" class="row">
     <div class="col-12">
         <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="flex flex-row justify-between bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                     <h6 class="text-white text-capitalize ps-3">Payments</h6>
-                  
                 </div>
             </div>
+
             <div class="card-body px-0 pb-2">
                 <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -16,54 +16,52 @@
                                 <th scope="col" class="px-1 py-1 text-center">User</th>
                                 <th scope="col" class="px-3 py-1 text-center">Initial Payment</th>
                                 <th scope="col" class="px-3 py-1 text-center">Paid Amount</th>
-
                                 <th scope="col" class="px-1 py-1 text-center">Status</th>
-                                <th scope="col" class="px-3 py-1 text-center">Due Date</th>
+                                <th scope="col" class="px-3 py-1 text-center">Payment Date</th>
                                 <th scope="col" class="px-1 py-1 text-center">Month</th>
                                 <th scope="col" class="px-1 py-1 text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($payments as $payment)
-                            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                            <tr x-data="{id:@entangle('id')}" class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                                 <td class="px-2 py-1">
                                     <h6 class="text-sm font-medium text-gray-900 dark:text-white">{{ $payment->business->business_name }}</h6>
                                 </td>
-
                                 <td class="px-2 py-1 text-center">
                                     <p class="text-xs text-gray-900 dark:text-white">{{ $payment->user->name }}</p>
                                 </td>
-
                                 <td class="px-2 py-1 text-center">
-                                    <p class="text-sm text-gray-900 dark:text-white">{{ $payment->initial_price ?? 0 }}</p>
+                                    <p class="text-sm text-gray-900 dark:text-white">
+                                        {{ $payment->initial_price ? 'ETB ' . number_format($payment->initial_price, 2) : 'ETB 0.00' }}
+                                    </p>
                                 </td>
                                 <td class="px-1 py-1 text-center">
-                                    <p class="text-sm text-gray-900 dark:text-white">{{ $payment->paid_amount ?? 0 }}</p>
+                                    <p class="text-sm text-gray-900 dark:text-white">
+                                        {{ $payment->paid_amount ? 'ETB ' . number_format($payment->paid_amount, 2) : 'ETB 0.00' }}
+                                    </p>
                                 </td>
-
-
                                 <td class="px-3 py-4">
                                     <span class="badge {{ $payment->status ? 'bg-green-500' : 'bg-yellow-500' }} text-white px-2 py-1 rounded">
                                         {{ $payment->status ? 'Paid' : 'Pending' }}
                                     </span>
                                 </td>
-
                                 <td class="px-2 py-1 text-center">
-                                    <p class="text-sm text-gray-900 dark:text-white">{{ $payment->payment_date ?? 'N/A' }}</p>
+                                    <p class="text-sm text-gray-900 dark:text-white"> {{ \Carbon\Carbon::parse($payment->payment_date)->format('F j, Y') ?? "N/A" }}
+                                    </p>
                                 </td>
-
                                 <td class="px-2 py-1 text-center">
-                                    <p class="text-sm text-gray-900 dark:text-white">{{ $payment->month ?? 'N/A' }}</p>
+                                <p class="text-sm capitalize text-gray-900 dark:text-white">{{ $payment->month ? ucfirst($payment->month) : 'N/A' }}</p>
                                 </td>
-
                                 <td class="px-2 py-1 text-center">
                                     <!-- Edit Icon -->
-                                    <button @click="paymentModal!=paymentModal" href="" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600">
-                                        <i class="fas fa-edit"></i>
+                                    <button @click="paymentModal = true; selectedId = {{ $payment->id }}" class="px-2 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600">
+                                        <i class="fas fa-edit text-blue-600 hover:text-blue-900"></i>
                                     </button>
+
                                     <!-- Delete Icon -->
                                     <button wire:click.prevent="deletePayment({{ $payment->id }})" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600">
-                                        <i class="fas fa-times"></i>
+                                        <i class="fas fa-trash-alt text-red-600 hover:text-red-900"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -75,67 +73,59 @@
         </div>
     </div>
 
-
-    <!-- payment model  -->
-
-
-    <!-- Modal toggle -->
-  
-
-    <!-- Main modal -->
-    <div >
-        <div x-show="paymentModal" id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full max-w-md max-h-full">
-                <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                            Create New Product
-                        </h3>
-                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                    </div>
-                    <!-- Modal body -->
-                    <form class="p-4 md:p-5">
-                        <div class="grid gap-4 mb-4 grid-cols-2">
-                            <div class="col-span-2">
-                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                                <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
-                            </div>
-                            <div class="col-span-2 sm:col-span-1">
-                                <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                                <input type="number" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$2999" required="">
-                            </div>
-                            <div class="col-span-2 sm:col-span-1">
-                                <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                                <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                    <option selected="">Select category</option>
-                                    <option value="TV">TV/Monitors</option>
-                                    <option value="PC">PC</option>
-                                    <option value="GA">Gaming/Console</option>
-                                    <option value="PH">Phones</option>
-                                </select>
-                            </div>
-                            <div class="col-span-2">
-                                <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Description</label>
-                                <textarea id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write product description here"></textarea>
-                            </div>
-                        </div>
-                        <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
-                            </svg>
-                            Add new product
-                        </button>
-                    </form>
+    <!-- Modal -->
+    <div x-show="paymentModal" class="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 border-b dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Edit Payment</h3>
+                    <button @click="paymentModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                        <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
                 </div>
+                <!-- Modal body -->
+                <form wire:submit.prevent="updatePayment" class="p-4">
+                    <div class="grid gap-4 mb-4 grid-cols-2">
+                        <div class="col-span-2">
+                            <label for="paid_amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Paid Amount</label>
+                            <input wire:model="paid_amount" type="text" id="paid_amount" class="bg-gray-50 border border-gray-300 text-sm rounded-lg w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Amount">
+                        </div>
+                        <div class="col-span-2">
+                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Month</label>
+                            <select wire:model="month" id="months" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                @foreach (getMonths() as $month)
+                                <option value="{{ strtolower($month) }}">{{ $month }}</option>
+                                @endforeach
+                            </select>
+
+                        </div>
+                        <div class="col-span-2">
+                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
+                            <select wire:model="status" id="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option class="uppercase" value="0" selected>PENDING</option>
+                                <option class="uppercase" value="1">PAID</option>
+
+                            </select>
+
+                        </div>
+                        <div class="col-span-2">
+                            <label for="payment_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Date</label>
+                            <input wire:model="payment_date" type="date" id="payment_date" class="bg-gray-50 border border-gray-300 text-sm rounded-lg w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Business name">
+                        </div>
+
+                    </div>
+                    <div>
+                        <button type="button" @click="paymentModal = false" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Back</button>
+
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700">Save</button>
+
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
 </div>

@@ -39,7 +39,7 @@ Route::get('reset-password/{id}', ResetPassword::class)->middleware('signed')->n
 
 
 
-Route::get('sign-up', Register::class)->middleware('guest')->name('register');
+// Route::get('sign-up', Register::class)->middleware('guest')->name('register');
 Route::get('sign-in', Login::class)->middleware('guest')->name('login');
 
 

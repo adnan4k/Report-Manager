@@ -183,11 +183,11 @@ class Multistep extends Component
         } elseif ($this->currentStep === 3) {
             // Validate Step 3 (Document Upload)
             $validated = $this->validate([
-                'payroll' => 'file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
-                'pension' => 'file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
-                'tax' => 'file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
-                'income_statement' => 'file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
-                'balance_sheet' => 'file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'payroll' => 'nullable|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'pension' => 'nullable|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'tax' => 'nullable|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'income_statement' => 'nullable|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
+                'balance_sheet' => 'nullable|file|mimes:pdf,docx,doc,jpeg,png,jpg,gif,xls,xlsx,csv',
             ]);
         }
 

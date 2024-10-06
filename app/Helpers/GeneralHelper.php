@@ -24,5 +24,14 @@ if (!function_exists('fileTypeChecker')) {
             return false;
         }
 
+
+    }
+
+    function getMonths() {
+        return [
+            'January', 'February', 'March', 'April', 'May',
+            'June', 'July', 'August', 'September', 'October',
+            'November', 'December'
+        ];
     }
 }

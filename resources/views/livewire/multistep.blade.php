@@ -164,7 +164,7 @@
                     <div class="mb-4">
 
                         <label for="payroll" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payroll Document</label>
-                        <input wire:model="payroll" type="file" id="payroll" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
+                        <input wire:model="payroll" type="file" id="payroll" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" >
                         @error('payroll') <!-- Error Handling -->
                         <span class="text-danger"> {{$message}} </span>
                         @enderror
@@ -174,7 +174,7 @@
                     <div class="mb-4">
 
                         <label for="pension" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pension Document</label>
-                        <input wire:model="pension" type="file" name="pension" id="pension" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
+                        <input wire:model="pension" type="file" name="pension" id="pension" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                         @error('pension') <!-- Error Handling -->
                         <span class="text-danger"> {{$message}} </span>
                         @enderror
@@ -184,7 +184,7 @@
                     <div class="mb-4">
 
                         <label for="tax" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tax/TOT Document</label>
-                        <input wire:model="tax" type="file" name="tax" id="tax" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
+                        <input wire:model="tax" type="file" name="tax" id="tax" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" >
                         @error('tax') <!-- Error Handling -->
                         <span class="text-danger"> {{$message}} </span>
                         @enderror
@@ -194,7 +194,7 @@
                     <div class="mb-4">
 
                         <label for="income_statement" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Income Statement</label>
-                        <input wire:model="income_statement" type="file" name="income_statement" id="income_statement" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
+                        <input wire:model="income_statement" type="file" name="income_statement" id="income_statement" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" >
                         @error('income_statement') <!-- Error Handling -->
                         <span class="text-danger"> {{$message}} </span>
                         @enderror
@@ -204,7 +204,7 @@
                     <div class="mb-4">
 
                         <label for="balance_sheet" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Balance Sheet</label>
-                        <input wire:model="balance_sheet" type="file" name="balance_sheet" id="balance_sheet" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
+                        <input wire:model="balance_sheet" type="file" name="balance_sheet" id="balance_sheet" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" >
                         @error('balance_sheet') <!-- Error Handling -->
                         <span class="text-danger"> {{$message}} </span>
                         @enderror

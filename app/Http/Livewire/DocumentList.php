@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Business;
 use App\Models\Document;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use ZipArchive;
@@ -29,9 +30,6 @@ class DocumentList extends Component
         $this->businesses = Business::with('documents')
             ->latest()
             ->get();
-          $vars =   json_decode($this->businesses->first()->documents->first()->tax, true);
-        //   dd($this->businesses);
-
     }
 
     public function uploadDocument()
@@ -40,8 +38,8 @@ class DocumentList extends Component
 
         // Fetch the selected business
         $business = Business::with('documents')
-        ->where('id',$this->selectedBusiness)
-        ->get();
+            ->where('id', $this->selectedBusiness)
+            ->get();
         // Fetch the existing document
         $document = $business->first()->documents->first();
 
@@ -92,51 +90,35 @@ class DocumentList extends Component
         // Emit success message
         $this->dispatch('document-uploaded');
         $this->open = false;
-
     }
 
     public function downloadDocuments($businessId)
     {
         $business = Business::with('documents')->findOrFail($businessId);
         $documents = $business->documents;
+
         // Define the path for the ZIP file
         $zipFileName = 'documents_' . $businessId . '.zip';
         $zipFilePath = storage_path('app/public/' . $zipFileName);
 
         $zip = new ZipArchive;
+
         if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
-
             foreach ($documents as $document) {
+                // Tax document (assuming $document->tax is a JSON-encoded array or single path)
+                $this->addFilesToZip($zip, $document->tax, 'Tax_');
 
-                // Tax document
-                $taxPath = storage_path('app/public/' . $document->tax);
-                if (file_exists($taxPath)) {
-                    $zip->addFile($taxPath, 'Tax_' . basename($taxPath));
-                }
+                // Income Statement document (assuming JSON array or single path)
+                $this->addFilesToZip($zip, $document->income_statement, 'Income_Statement_');
 
-                // Income Statement document
-                $incomeStatementPath = storage_path('app/public/' . $document->income_statement);
-                if (file_exists($incomeStatementPath)) {
-                    $zip->addFile($incomeStatementPath, 'Income_Statement_' . basename($incomeStatementPath));
-                }
+                // Balance Sheet document (assuming JSON array or single path)
+                $this->addFilesToZip($zip, $document->balance_sheet, 'Balance_Sheet_');
 
-                // Balance Sheet document
-                $balanceSheetPath = storage_path('app/public/' . $document->balance_sheet);
-                if (file_exists($balanceSheetPath)) {
-                    $zip->addFile($balanceSheetPath, 'Balance_Sheet_' . basename($balanceSheetPath));
-                }
+                // Pension document (assuming JSON array or single path)
+                $this->addFilesToZip($zip, $document->pension, 'Pension_');
 
-                // Pension document
-                $pensionPath = storage_path('app/public/' . $document->pension);
-                if (file_exists($pensionPath)) {
-                    $zip->addFile($pensionPath, 'Pension_' . basename($pensionPath));
-                }
-
-                // Payroll document
-                $payrollPath = storage_path('app/public/' . $document->payroll);
-                if (file_exists($payrollPath)) {
-                    $zip->addFile($payrollPath, 'Payroll_' . basename($payrollPath));
-                }
+                // Payroll document (assuming JSON array or single path)
+                $this->addFilesToZip($zip, $document->payroll, 'Payroll_');
             }
 
             $zip->close();
@@ -148,6 +130,37 @@ class DocumentList extends Component
         // Trigger download by redirecting to the URL of the ZIP file
         return response()->download($zipFilePath)->deleteFileAfterSend(true);
     }
+
+    /**
+     * Add files to ZIP.
+     *
+     * @param ZipArchive $zip
+     * @param string $filePath String or JSON array of file paths.
+     * @param string $prefix Prefix for the file names in the ZIP.
+     */
+    private function addFilesToZip($zip, $filePath, $prefix)
+    {
+        // Check if the file path is a JSON-encoded array or a single file
+        if (is_string($filePath) && preg_match('/^\[.*\]$/', $filePath)) {
+            $filePaths = json_decode($filePath, true); // Decoding JSON array to PHP array
+        } else {
+            $filePaths = [$filePath]; // If it's not JSON, treat it as a single path
+        }
+
+        // Iterate through each file in the array
+        foreach ($filePaths as $path) {
+            $fullPath = storage_path('app/public/' . trim($path, '"'));
+
+            Log::info('File Path: ' . $fullPath);
+
+            if (file_exists($fullPath)) {
+                $zip->addFile($fullPath, $prefix . basename($fullPath));
+            } else {
+                Log::info($prefix . ' file does not exist: ' . $fullPath);
+            }
+        }
+    }
+
 
     public function render()
     {

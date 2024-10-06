@@ -18,10 +18,10 @@
         </ol>
         @script
         <script>
-            $wire.on('post-created', () => {
+            $wire.on('customer-updated', () => {
                 console.log('here is something')
                 Toastify({
-                    text: "Customer Registration Successfully Completed.",
+                    text: "Customer Updated Successfully .",
                     className: "info",
                     style: {
                         background: "linear-gradient(to right, #00b09b, #96c93d)",
@@ -100,6 +100,22 @@
                         <span class="text-danger"> {{$message}} </span>
                         @enderror
                     </div>
+                    <div class="mb-4">
+                        <label for="tax_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tax Type</label>
+
+                        <select wire:model="tax_type" id="tax_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" disabled>Select tax type</option> <!-- To force selection -->
+
+                            <option value="vat" {{ $tax_type === 'vat' ? 'selected' : '' }}>VAT</option>
+                            <option value="tot" {{ $tax_type === 'tot' ? 'selected' : '' }}>TOT</option>
+
+                        </select>
+
+                        @error('tax_type')
+                        <span class="text-danger"> {{$message}} </span>
+                        @enderror
+                    </div>
+
 
                     <div class="mb-4">
 
