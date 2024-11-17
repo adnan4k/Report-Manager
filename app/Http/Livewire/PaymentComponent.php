@@ -24,23 +24,30 @@ class PaymentComponent extends Component
 
     public function updatePayment()
     {
+
+        // dd('here is payment');
+
         $validatedData = $this->validate([
             'status' => 'required',
             'month' => 'required',
             'payment_date' => 'required',
             'paid_amount' => 'required'
         ]);
-        Log::info($validatedData);
         $paymentInformation = Payment::findOrFail($this->selectedPaymentId);
         $paymentInformation->status = $this->status;
         $paymentInformation->month = $this->month;
         $paymentInformation->paid_amount = $this->paid_amount;
         $paymentInformation->save();
-        $this->paymentModal = false;
         $this->mount();
         $this->dispatch('payment-updated');
         $this->reset();
+        $this->payments = Payment::with(['business', 'user'])->get();
+        $this->paymentModal = false;
+            //  dd($this->paymentModal);
+        return redirect()->back();
+
     }
+    
 
     public function render()
     {

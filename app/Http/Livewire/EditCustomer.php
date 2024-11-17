@@ -65,6 +65,7 @@ class EditCustomer extends Component
         $payment = Payment::where('user_id', $user->id)->firstOrFail();
         $this->business_name = $business->business_name;
         $this->tin = $business->tin;
+        $this->tax_type = $business->tax_type;
         $this->price = $payment->initial_price;
 
         // Load Report Data

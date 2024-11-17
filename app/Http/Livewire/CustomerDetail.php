@@ -22,7 +22,7 @@ class CustomerDetail extends Component
         $this->businesses = Business::where('user_id',$id)
         ->with('documents') 
         ->get();
-        // dd($this->businesses);
+        // dd($this->customer->businesses->first()->reports);
 
         // Optionally, store id in session
         session()->flash('id', $id);

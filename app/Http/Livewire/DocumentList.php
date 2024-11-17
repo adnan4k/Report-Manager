@@ -98,7 +98,7 @@ class DocumentList extends Component
         $documents = $business->documents;
 
         // Define the path for the ZIP file
-        $zipFileName = 'documents_' . $businessId . '.zip';
+        $zipFileName = $business->business_name . $businessId . '.zip';
         $zipFilePath = storage_path('app/public/' . $zipFileName);
 
         $zip = new ZipArchive;

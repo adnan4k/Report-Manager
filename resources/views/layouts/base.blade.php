@@ -28,6 +28,8 @@
 
 
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     @livewireStyles
 </head>
 
@@ -35,6 +37,7 @@
     class="g-sidenav-show {{ Route::currentRouteName() == 'rtl' ? 'rtl' : '' }} {{ Route::currentRouteName() == 'register' || Route::currentRouteName() == 'static-sign-up' ? '' : 'bg-gray-200' }}">
 
     {{ $slot }}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('assets') }}/js/core/bootstrap.min.js"></script>
@@ -46,7 +49,10 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script>
-       
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
+
         window.addEventListener('showConfirmation', event => {
             let customerData = event.detail;
             let customerId
@@ -67,7 +73,7 @@
                     console.log(customerId, 'rr')
                     Livewire.dispatch('deleteConfirmed', {
                         id: customerId
-                    }); // Trigger the delete method in Livewire
+                    }); // Trigger the delete method in LivewireP
                 }
             });
         });
@@ -95,6 +101,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('assets') }}/js/material-dashboard.min.js?v=3.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @livewireScripts
 </body>
 

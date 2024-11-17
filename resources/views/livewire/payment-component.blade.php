@@ -1,4 +1,7 @@
-<div x-data="{ paymentModal: false, selectedId: @entangle('selectedPaymentId') }" class="row">
+<div x-data="{ 
+    paymentModal: @entangle('paymentModal').defer, 
+    selectedId: @entangle('selectedPaymentId').defer 
+}" class="row">
     <div class="col-12">
         <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
@@ -51,7 +54,7 @@
                                     </p>
                                 </td>
                                 <td class="px-2 py-1 text-center">
-                                <p class="text-sm capitalize text-gray-900 dark:text-white">{{ $payment->month ? ucfirst($payment->month) : 'N/A' }}</p>
+                                    <p class="text-sm capitalize text-gray-900 dark:text-white">{{ $payment->month ? ucfirst($payment->month) : 'N/A' }}</p>
                                 </td>
                                 <td class="px-2 py-1 text-center">
                                     <!-- Edit Icon -->
@@ -92,39 +95,65 @@
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div class="col-span-2">
                             <label for="paid_amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Paid Amount</label>
-                            <input wire:model="paid_amount" type="text" id="paid_amount" class="bg-gray-50 border border-gray-300 text-sm rounded-lg w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Amount">
+                            <input wire:model="paid_amount" type="text" id="paid_amount"
+                                class="bg-gray-50 border border-gray-300 text-sm rounded-lg w-full p-2.5 
+                          dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                placeholder="Amount">
+                            <!-- Error message -->
+                            @error('paid_amount')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
+
                         <div class="col-span-2">
-                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Month</label>
-                            <select wire:model="month" id="months" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <label for="months" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Month</label>
+                            <select wire:model="month" id="months"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+                           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 @foreach (getMonths() as $month)
                                 <option value="{{ strtolower($month) }}">{{ $month }}</option>
                                 @endforeach
                             </select>
-
+                            <!-- Error message -->
+                            @error('month')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
+
                         <div class="col-span-2">
-                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                            <select wire:model="status" id="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
+                            <select wire:model="status" id="status"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+                           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option class="uppercase" value="0" selected>PENDING</option>
                                 <option class="uppercase" value="1">PAID</option>
-
                             </select>
-
+                            <!-- Error message -->
+                            @error('status')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
+
                         <div class="col-span-2">
                             <label for="payment_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Date</label>
-                            <input wire:model="payment_date" type="date" id="payment_date" class="bg-gray-50 border border-gray-300 text-sm rounded-lg w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Business name">
+                            <input wire:model="payment_date" type="date" id="payment_date"
+                                class="bg-gray-50 border border-gray-300 text-sm rounded-lg w-full p-2.5 
+                          dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                            <!-- Error message -->
+                            @error('payment_date')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
-
                     </div>
+
                     <div>
-                        <button type="button" @click="paymentModal = false" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Back</button>
-
-                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700">Save</button>
-
+                        <button type="button" @click="paymentModal = false"
+                            class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Back</button>
+                        <button type="submit"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700">Save</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

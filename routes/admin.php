@@ -4,6 +4,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\CustomerRegistration;
 use App\Http\Livewire\BusinessDetail;
+use App\Http\Livewire\ChangePassword;
 use App\Http\Livewire\CustomerDetail;
 use App\Http\Livewire\CustomersList;
 use App\Http\Livewire\DetailsPage;
@@ -34,9 +35,7 @@ Route::get('details',DetailsPage::class)->name('details');
 Route::get('customer-detail/{id}', CustomerDetail::class)->name('customer-detail');
 Route::get('main/{id}',Main::class)->name('main');
 Route::get('payments',PaymentComponent::class)->name('payments');
-
-
-
+Route::get('/chang-password',ChangePassword::class)->name('change-password');
 
 
 

@@ -155,8 +155,8 @@
                                     Payroll
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    <span class="badge {{ $customer->businesses->first()->reports->first()->payroll ? 'bg-green-500' : 'bg-yellow-500' }} text-white px-2 py-1 rounded">
-                                        {{$customer->businesses->first()->reports->first()->payroll ? 'Reported' : 'Pending' }}
+                                    <span class="badge {{ $customer->businesses->first()->reports->first()->payroll_status ? 'bg-green-500' : 'bg-yellow-500' }} text-white px-2 py-1 rounded">
+                                        {{$customer->businesses->first()->reports->first()->payroll_status ? 'Reported' : 'Pending' }}
                                     </span>
                                 </dd>
 
@@ -169,8 +169,8 @@
                                     Statement
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    <span class="badge {{ $customer->businesses->first()->reports->first()->statement ? 'bg-green-500' : 'bg-yellow-500' }} text-white px-2 py-1 rounded">
-                                        {{$customer->businesses->first()->reports->first()->statement ? 'Reported' : 'Pending' }}
+                                    <span class="badge {{ $customer->businesses->first()->reports->first()->statement_status ? 'bg-green-500' : 'bg-yellow-500' }} text-white px-2 py-1 rounded">
+                                        {{$customer->businesses->first()->reports->first()->statement_status ? 'Reported' : 'Pending' }}
                                     </span>
                                 </dd>
                                 <dt class="text-sm font-medium text-gray-500">DueDate</dt>

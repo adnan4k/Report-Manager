@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\ExampleLaravel\UserManagement;
 use App\Http\Livewire\ExampleLaravel\UserProfile;
+use App\Http\Livewire\Notification;
 use App\Http\Livewire\Notifications;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\RTL;
+use App\Http\Livewire\SmsNotification;
 use App\Http\Livewire\StaticSignIn;
 use App\Http\Livewire\StaticSignUp;
 use App\Http\Livewire\Tables;
@@ -47,6 +49,10 @@ Route::get('user-management', UserManagement::class)->middleware('auth')->name('
 
 Route::group(['middleware' => 'auth'], function () {
 Route::get('dashboard', Dashboard::class)->name('dashboard');
+Route::get('notification', Notification::class)->name('notification');
+Route::get('sms', SmsNotification::class)->name('sms');
+
+
 Route::get('billing', Billing::class)->name('billing');
 Route::get('profile', Profile::class)->name('profile');
 Route::get('tables', Tables::class)->name('tables');
